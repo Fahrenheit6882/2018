@@ -32,6 +32,9 @@
 package org.usfirst.frc.team6882.robot;
 
 import org.usfirst.frc.team6882.globals.hardware;
+
+import edu.wpi.first.wpilibj.Joystick.AxisType;
+
 import org.usfirst.frc.team6882.globals.constants;
 
 /**
@@ -43,6 +46,7 @@ public class Teleop
 	
 	static double speedLeft = 0.0;
 	static double speedRight = 0.0;
+	static double speedLift = 0.0;
 	
 /**
  * User Initialization code for teleop mode should go here. Will be called
@@ -64,6 +68,16 @@ public static void periodic ()
     // OPERATOR CONTROLS
     // =================================================================
 	
+	if(Math.abs(hardware.gamePad1.getRawAxis(constants.gpRightY)) > constants.gamepadDeadZone)
+	{
+		speedLift = hardware.gamePad1.getRawAxis(constants.gpRightY);
+	}
+	else
+	{
+		speedLift = 0;
+	}
+	hardware.manipulators.moveLift(speedLift);
+	
     // =================================================================
     // CAMERA CODE
     // =================================================================
@@ -78,7 +92,7 @@ public static void periodic ()
 		
 	
 	// Joystick speed controls for driving
-	if(Math.abs(hardware.leftStick.getY()) > constants.deadZone)
+	if(Math.abs(hardware.leftStick.getY()) > constants.joystickDeadZone)
 	{
 //		hardware.leftSpark1.set(hardware.leftStick.getY() * constants.fastSpeedFactor * -1);
 //		hardware.leftSpark2.set(hardware.leftStick.getY() * constants.fastSpeedFactor * -1);
@@ -91,7 +105,7 @@ public static void periodic ()
 		speedLeft = 0;
 	}
 
-	if(Math.abs(hardware.rightStick.getY()) > constants.deadZone)
+	if(Math.abs(hardware.rightStick.getY()) > constants.joystickDeadZone)
 	{
 //		hardware.rightSpark1.set(hardware.rightStick.getY() * constants.fastSpeedFactor * 1);
 //		hardware.rightSpark2.set(hardware.rightStick.getY() * constants.fastSpeedFactor * 1);
@@ -104,7 +118,7 @@ public static void periodic ()
 		speedRight = 0;
 	}
 	
-	hardware.driveBase.drive(speedLeft, speedRight);
+	//hardware.driveBase.drive(speedLeft, speedRight);
 
 }
 // end

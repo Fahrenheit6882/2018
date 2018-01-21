@@ -15,6 +15,7 @@
 package org.usfirst.frc.team6882.globals;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 
 import org.usfirst.frc.team6882.interfaces.Transmission;
+import org.usfirst.frc.team6882.interfaces.Manipulators;
 
 
 // -------------------------------------------------------
@@ -57,7 +59,8 @@ public class hardware
 // ------------------------------------
 // Talon classes
 // ------------------------------------
-	//public static Talon liftTalon = new Talon(0);
+	public static Talon liftTalon = new Talon(4);
+	public static Manipulators manipulators = new Manipulators (liftTalon);
 	
 
 // ------------------------------------
@@ -165,6 +168,7 @@ public static DriverStation driverStation = DriverStation.getInstance();
 // ------------------------------------
 public static Joystick leftStick = new Joystick(0);
 public static Joystick rightStick = new Joystick(1);
+public static Joystick gamePad1 = new Joystick(2);
 
 
 } // end class

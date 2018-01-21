@@ -25,6 +25,25 @@ public class constants
 // ------------------------------------
 // Public Constants
 // ------------------------------------
+	// Game Pad Axis Indexes
+	public static final int gpLeftX = 0;
+	public static final int gpLeftY = 1;
+	public static final int gpLeftTrig = 2;
+	public static final int gpRightTrig = 3;
+	public static final int gpRightX = 4;
+	public static final int gpRightY = 5;
+	
+	// Game Pad Button Indexes
+	public static final int gpBtnA = 0;
+	public static final int gpBtnB = 1;
+	public static final int gpBtnX = 2;
+	public static final int gpBtnY = 3;
+	public static final int gpBtnLB = 4;
+	public static final int gpBtnRB = 5;
+	public static final int gpBtnBack = 6;
+	public static final int gpBtnStart = 7;
+	public static final int gpBtnLStick = 8;
+	public static final int gpBtnRStick = 9;
 
 
 // -------------------------------------
@@ -34,8 +53,15 @@ public class constants
 // ---------------------------------------
 // Hardware Tunables
 // ---------------------------------------
+	
+	// Speed Factors
 	public static double fastSpeedFactor = 0.6;
 	public static double slowSpeedFactor = 0.2;
-	public static double deadZone = 0.2;
+	public static double liftSpeedFactor = 0.5;
+	
+	// Dead Zones
+	public static double joystickDeadZone = 0.2;
+	public static double gamepadDeadZone = 0.1;
+	
 
 } // end class
