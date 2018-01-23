@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Spark;
 
 public class Transmission {
 
-	private static Spark left1, left2, right1, right2;
+	private Spark left1, left2, right1, right2;
 	private boolean fast = true;
 	private boolean gearButtonState = false;
 
@@ -47,13 +47,15 @@ public class Transmission {
 	 */
 	public void drive(double speedLeft, double speedRight) {
 		double currentSpeed;
-
+		
+		// determine speed factor based on current gear
 		if (fast) {
 			currentSpeed = constants.fastSpeedFactor;
 		} else {
 			currentSpeed = constants.slowSpeedFactor;
 		}
 
+		// set motors to ratio of current gear speed based on given desired speed
 		left1.set(currentSpeed * speedLeft);
 		left2.set(currentSpeed * speedLeft);
 		right1.set(currentSpeed * speedRight);
