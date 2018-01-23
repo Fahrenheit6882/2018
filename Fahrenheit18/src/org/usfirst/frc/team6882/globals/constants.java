@@ -20,11 +20,10 @@ package org.usfirst.frc.team6882.globals;
  * them available to both autonomous and teleop.
  */
 
-public class constants
-{
-// ------------------------------------
-// Public Constants
-// ------------------------------------
+public class constants {
+	// ------------------------------------
+	// Public Constants
+	// ------------------------------------
 	// Game Pad Axis Indexes
 	public static final int gpLeftX = 0;
 	public static final int gpLeftY = 1;
@@ -32,7 +31,7 @@ public class constants
 	public static final int gpRightTrig = 3;
 	public static final int gpRightX = 4;
 	public static final int gpRightY = 5;
-	
+
 	// Game Pad Button Indexes
 	public static final int gpBtnA = 0;
 	public static final int gpBtnB = 1;
@@ -45,23 +44,21 @@ public class constants
 	public static final int gpBtnLStick = 8;
 	public static final int gpBtnRStick = 9;
 
+	// -------------------------------------
+	// Private Constants
+	// -------------------------------------
 
-// -------------------------------------
-// Private Constants
-// -------------------------------------
+	// ---------------------------------------
+	// Hardware Tunables
+	// ---------------------------------------
 
-// ---------------------------------------
-// Hardware Tunables
-// ---------------------------------------
-	
 	// Speed Factors
 	public static double fastSpeedFactor = 0.6;
 	public static double slowSpeedFactor = 0.2;
 	public static double liftSpeedFactor = 0.5;
-	
+
 	// Dead Zones
 	public static double joystickDeadZone = 0.2;
 	public static double gamepadDeadZone = 0.1;
-	
 
 } // end class

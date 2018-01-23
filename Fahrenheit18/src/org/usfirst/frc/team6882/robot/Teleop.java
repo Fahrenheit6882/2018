@@ -38,200 +38,187 @@ import edu.wpi.first.wpilibj.Joystick.AxisType;
 import org.usfirst.frc.team6882.globals.constants;
 
 /**
- * This class contains all of the user code for the Teleop part of the
- * match, namely, the Init and Periodic code
+ * This class contains all of the user code for the Teleop part of the match,
+ * namely, the Init and Periodic code
  */
-public class Teleop
-{
-	
+public class Teleop {
+
 	static double speedLeft = 0.0;
 	static double speedRight = 0.0;
 	static double speedLift = 0.0;
-	
-/**
- * User Initialization code for teleop mode should go here. Will be called
- * once when the robot enters teleop mode.
- */
-public static void init ()
-{
 
+	/**
+	 * User Initialization code for teleop mode should go here. Will be called once
+	 * when the robot enters teleop mode.
+	 */
+	public static void init() {
 
-} // end Init
+	} // end Init
 
-/**
- * User Periodic code for teleop mode should go here. Will be called
- * periodically at a regular rate while the robot is in teleop mode.
- */
-public static void periodic ()
-{
-    // =================================================================
-    // OPERATOR CONTROLS
-    // =================================================================
-	
-	if(Math.abs(hardware.gamePad1.getRawAxis(constants.gpRightY)) > constants.gamepadDeadZone)
-	{
-		speedLift = hardware.gamePad1.getRawAxis(constants.gpRightY);
+	/**
+	 * User Periodic code for teleop mode should go here. Will be called
+	 * periodically at a regular rate while the robot is in teleop mode.
+	 */
+	public static void periodic() {
+		// =================================================================
+		// OPERATOR CONTROLS
+		// =================================================================
+
+		if (Math.abs(hardware.gamePad1.getRawAxis(constants.gpRightY)) > constants.gamepadDeadZone) {
+			speedLift = hardware.gamePad1.getRawAxis(constants.gpRightY);
+		} else {
+			speedLift = 0;
+		}
+		hardware.manipulators.moveLift(speedLift);
+
+		// =================================================================
+		// CAMERA CODE
+		// =================================================================
+
+		// =================================================================
+		// Driving code
+		// =================================================================
+
+		// Change gears while driving
+
+		hardware.driveBase.changeGear(hardware.rightStick.getRawButtonPressed(3));
+
+		// Joystick speed controls for driving
+		if (Math.abs(hardware.leftStick.getY()) > constants.joystickDeadZone) {
+			// hardware.leftSpark1.set(hardware.leftStick.getY() * constants.fastSpeedFactor
+			// * -1);
+			// hardware.leftSpark2.set(hardware.leftStick.getY() * constants.fastSpeedFactor
+			// * -1);
+			speedLeft = hardware.leftStick.getY();
+		} else {
+			// hardware.leftSpark1.set(0);
+			// hardware.leftSpark2.set(0);
+			speedLeft = 0;
+		}
+
+		if (Math.abs(hardware.rightStick.getY()) > constants.joystickDeadZone) {
+			// hardware.rightSpark1.set(hardware.rightStick.getY() *
+			// constants.fastSpeedFactor * 1);
+			// hardware.rightSpark2.set(hardware.rightStick.getY() *
+			// constants.fastSpeedFactor * 1);
+			speedRight = hardware.rightStick.getY();
+		} else {
+			// hardware.rightSpark1.set(0);
+			// hardware.rightSpark2.set(0);
+			speedRight = 0;
+		}
+
+		// hardware.driveBase.drive(speedLeft, speedRight);
+
 	}
-	else
-	{
-		speedLift = 0;
-	}
-	hardware.manipulators.moveLift(speedLift);
-	
-    // =================================================================
-    // CAMERA CODE
-    // =================================================================
+	// end
+	// Periodic
 
-    // =================================================================
-    // Driving code
-    // =================================================================	
-	
-	// Change gears while driving
+	/**
+	 * stores print statements for future use in the print "bank", statements are
+	 * commented out when not in use, when you write a new print statement,
+	 * "deposit" the statement in the correct "bank" do not "withdraw" statements,
+	 * unless directed to.
+	 * 
+	 * NOTE: Keep the groupings below, which correspond in number and order as the
+	 * hardware declarations in the HARDWARE class
+	 */
+	public static void printStatements() {
 
-	hardware.driveBase.changeGear(hardware.rightStick.getRawButtonPressed(3));
-		
-	
-	// Joystick speed controls for driving
-	if(Math.abs(hardware.leftStick.getY()) > constants.joystickDeadZone)
-	{
-//		hardware.leftSpark1.set(hardware.leftStick.getY() * constants.fastSpeedFactor * -1);
-//		hardware.leftSpark2.set(hardware.leftStick.getY() * constants.fastSpeedFactor * -1);
-		speedLeft = hardware.leftStick.getY();
-	}
-	else
-	{
-//		hardware.leftSpark1.set(0);
-//		hardware.leftSpark2.set(0);
-		speedLeft = 0;
-	}
+		// =================================
+		// Motor
+		// Prints the value of motors
+		// =================================
 
-	if(Math.abs(hardware.rightStick.getY()) > constants.joystickDeadZone)
-	{
-//		hardware.rightSpark1.set(hardware.rightStick.getY() * constants.fastSpeedFactor * 1);
-//		hardware.rightSpark2.set(hardware.rightStick.getY() * constants.fastSpeedFactor * 1);
-		speedRight = hardware.rightStick.getY();
-	}
-	else
-	{
-//		hardware.rightSpark1.set(0);
-//		hardware.rightSpark2.set(0);
-		speedRight = 0;
-	}
-	
-	//hardware.driveBase.drive(speedLeft, speedRight);
+		// =================================
+		// CAN items
+		// prints value of the CAN controllers
+		// =================================
 
-}
-// end
-// Periodic
+		// =================================
+		// Relay
+		// =================================
 
-/**
- * stores print statements for future use in the print "bank", statements
- * are commented out when not in use, when you write a new print statement,
- * "deposit" the statement in the correct "bank" do not "withdraw"
- * statements, unless directed to.
- * 
- * NOTE: Keep the groupings below, which correspond in number and order as
- * the hardware declarations in the HARDWARE class
- */
-public static void printStatements ()
-{
+		// =================================
+		// Digital Inputs
+		// =================================
 
-    // =================================
-    // Motor
-    // Prints the value of motors
-    // =================================
+		// ---------------------------------
+		// Switches
+		// prints state of switches
+		// ---------------------------------
 
-    // =================================
-    // CAN items
-    // prints value of the CAN controllers
-    // =================================
+		// ---------------------------------
+		// Encoders
+		// ---------------------------------
 
-    // =================================
-    // Relay
-    // =================================
+		// ---------------------------------
+		// Red Light/IR Sensors
+		// prints the state of the sensor
+		// ---------------------------------
 
-    // =================================
-    // Digital Inputs
-    // =================================
+		// =================================
+		// Pneumatics
+		// =================================
 
-    // ---------------------------------
-    // Switches
-    // prints state of switches
-    // ---------------------------------
+		// ---------------------------------
+		// Compressor
+		// prints information on the compressor
+		// ---------------------------------
 
-    // ---------------------------------
-    // Encoders
-    // ---------------------------------
+		// ---------------------------------
+		// Solenoids
+		// prints the state of solenoids
+		// ---------------------------------
 
-    // ---------------------------------
-    // Red Light/IR Sensors
-    // prints the state of the sensor
-    // ---------------------------------
+		// =================================
+		// Analogs
+		// =================================
 
-    // =================================
-    // Pneumatics
-    // =================================
+		// ---------------------------------
+		// pots
+		// where the pot is turned to
+		// ---------------------------------
 
-    // ---------------------------------
-    // Compressor
-    // prints information on the compressor
-    // ---------------------------------
+		// --------------------------
+		// Sonar/UltraSonic
+		// --------------------------
 
-    // ---------------------------------
-    // Solenoids
-    // prints the state of solenoids
-    // ---------------------------------
+		// =========================
+		// Servos
+		// =========================
+		//
+		// ================
+		// GYRO
+		// =================
 
-    // =================================
-    // Analogs
-    // =================================
+		// =================================
+		// Connection Items
+		// =================================
 
-    // ---------------------------------
-    // pots
-    // where the pot is turned to
-    // ---------------------------------
+		// ---------------------------------
+		// Cameras
+		// prints any camera information required
+		// ---------------------------------
 
-    // --------------------------
-    // Sonar/UltraSonic
-    // --------------------------
+		// =================================
+		// Driver station
+		// =================================
 
-    // =========================
-    // Servos
-    // =========================
-    //
-    // ================
-    // GYRO
-    // =================
+		// ---------------------------------
+		// Joysticks
+		// information about the joysticks
+		// ---------------------------------
 
-    // =================================
-    // Connection Items
-    // =================================
+		// ---------------------------------
+		// timers
+		// what time does the timer have now
+		// ---------------------------------
 
-    // ---------------------------------
-    // Cameras
-    // prints any camera information required
-    // ---------------------------------
+	} // end printStatements
 
-    // =================================
-    // Driver station
-    // =================================
-
-    // ---------------------------------
-    // Joysticks
-    // information about the joysticks
-    // ---------------------------------
-
-    // ---------------------------------
-    // timers
-    // what time does the timer have now
-    // ---------------------------------
-
-} // end printStatements
-
-/*
- * ================================
- * Constants
- * ================================
- */
+	/*
+	 * ================================ Constants ================================
+	 */
 
 } // end class
