@@ -34,10 +34,10 @@ public class Autonomous {
 	} // end Init
 
 	public static enum State {
-		INIT, CAPTURE, DRIVETURNRIGHT, DRIVETURNLEFT, FORWARD, RESET, BLOCK, STOP, FINISH
+		START, CAPTURE, DRIVETURNRIGHT, DRIVETURNLEFT, FORWARD, RESET, BLOCK, STOP, FINISH
 	}
 
-	public static State autoState = State.INIT;
+	public static State autoState = State.START;
 
 	/**
 	 * User Periodic code for autonomous mode should go here. Will be called
@@ -47,39 +47,39 @@ public class Autonomous {
 		// if Autonomous is not disabled (i.e. Autonomous is enabled) do some things
 		if (hardware.disableAutoSwitch.get() == false) {
 			switch (autoState) {
-			case INIT:
-				switch (ourSwitch) {
-				case 'r':
-				case 'R':
-
+				case START:
+					switch (ourSwitch) {
+					case 'r':
+					case 'R':
+	
+						break;
+					case 'l':
+					case 'L':
+						break;
+					}
 					break;
-				case 'l':
-				case 'L':
+				case CAPTURE:
+	
 					break;
-				}
-				break;
-			case CAPTURE:
-
-				break;
-			case DRIVETURNLEFT:
-				break;
-			case DRIVETURNRIGHT:
-				break;
-			case FORWARD:
-				hardware.driveBase.drive(1, 1);
-				break;
-			case RESET:
-				break;
-			case BLOCK:
-				break;
-			case STOP:
-				break;
-			case FINISH:
-
-				break;
-
-			default:
-				break;
+				case DRIVETURNLEFT:
+					break;
+				case DRIVETURNRIGHT:
+					break;
+				case FORWARD:
+					hardware.driveBase.drive(1, 1);
+					break;
+				case RESET:
+					break;
+				case BLOCK:
+					break;
+				case STOP:
+					break;
+				case FINISH:
+	
+					break;
+	
+				default:
+					break;
 			}
 		}
 	}
