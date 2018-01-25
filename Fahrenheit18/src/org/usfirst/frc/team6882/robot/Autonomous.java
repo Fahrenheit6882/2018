@@ -19,6 +19,7 @@ public class Autonomous {
 	// Reading game data and storing as char
 	static char ourSwitch;
 	static char Scale;
+	static char startPosition;
 
 	/**
 	 * User Initialization code for autonomous mode should go here. Will run once
@@ -30,11 +31,16 @@ public class Autonomous {
 		autoTimer = new Timer();
 
 		// read game data
-
+		ourSwitch = ' ';
+		Scale = ' ';
+		
+		//TODO read the switch
+		// setting starting position to L for test
+		startPosition = 'L';
 	} // end Init
 
 	public static enum State {
-		START, CAPTURE, DRIVETURNRIGHT, DRIVETURNLEFT, FORWARD, RESET, BLOCK, STOP, FINISH
+		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD, RESET, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -46,33 +52,34 @@ public class Autonomous {
 	public static void periodic() {
 		// if Autonomous is not disabled (i.e. Autonomous is enabled) do some things
 		if (hardware.disableAutoSwitch.get() == false) {
+			System.out.println(autoState.toString());
 			switch (autoState) {
 				case START:
-					switch (ourSwitch) {
-					case 'r':
-					case 'R':
-	
-						break;
-					case 'l':
-					case 'L':
-						break;
+					hardware.driveBase.stop();
+					String rawData = hardware.driverStation.getInstance().getGameSpecificMessage();
+					if(rawData != "") {
+						ourSwitch = rawData.charAt(0);
+						Scale = rawData.charAt(1);
+						
+						if(startPosition == 'R' || startPosition == 'L') {
+							autoState = State.AUTOLINEFORWARD;
+						}
+						if(startPosition == 'C') {
+							autoState = State.CENTERAPPROACHSWITCH;
+						}
 					}
 					break;
-				case CAPTURE:
-	
-					break;
-				case DRIVETURNLEFT:
-					break;
-				case DRIVETURNRIGHT:
-					break;
-				case FORWARD:
+				case AUTOLINEFORWARD:
 					hardware.driveBase.drive(1, 1);
+					//Encoder Code will go here
+					//set condition gone far enough which is 168 inches
+						hardware.driveBase.stop();
+						autoState = State.CAPTURESWITCH;
+					//end curly bracket of condition goes here	
 					break;
-				case RESET:
-					break;
-				case BLOCK:
-					break;
-				case STOP:
+				case CAPTURESWITCH:
+					
+					
 					break;
 				case FINISH:
 	
