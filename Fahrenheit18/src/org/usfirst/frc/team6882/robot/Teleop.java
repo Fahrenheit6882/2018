@@ -108,7 +108,7 @@ public class Teleop {
 			speedRight = 0;
 		}
 
-		// hardware.driveBase.drive(speedLeft, speedRight);
+		hardware.driveBase.drive(speedLeft, speedRight);
 
 	}
 	// end

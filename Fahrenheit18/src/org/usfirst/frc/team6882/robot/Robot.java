@@ -130,6 +130,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		// System.out.println("Started AutonousPeriodic().");
 		// =========================================================
 		// User code goes below here
 		// =========================================================

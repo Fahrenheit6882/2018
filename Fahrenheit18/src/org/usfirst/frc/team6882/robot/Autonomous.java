@@ -20,6 +20,7 @@ public class Autonomous {
 	static char ourSwitch;
 	static char Scale;
 	static char startPosition;
+	static int tempTick;
 
 	/**
 	 * User Initialization code for autonomous mode should go here. Will run once
@@ -37,6 +38,7 @@ public class Autonomous {
 		//TODO read the switch
 		// setting starting position to L for test
 		startPosition = 'L';
+		tempTick = 0;
 	} // end Init
 
 	public static enum State {
@@ -51,7 +53,8 @@ public class Autonomous {
 	 */
 	public static void periodic() {
 		// if Autonomous is not disabled (i.e. Autonomous is enabled) do some things
-		if (hardware.disableAutoSwitch.get() == false) {
+		//TODO Put physical switch read back into the if statement
+		if (true) {
 			System.out.println(autoState.toString());
 			switch (autoState) {
 				case START:
@@ -70,11 +73,15 @@ public class Autonomous {
 					}
 					break;
 				case AUTOLINEFORWARD:
+					tempTick++;
 					hardware.driveBase.drive(1, 1);
 					//Encoder Code will go here
 					//set condition gone far enough which is 168 inches
+					if (tempTick > 100)
+					{
 						hardware.driveBase.stop();
 						autoState = State.CAPTURESWITCH;
+					}
 					//end curly bracket of condition goes here	
 					break;
 				case CAPTURESWITCH:
