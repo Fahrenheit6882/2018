@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import org.usfirst.frc.team6882.interfaces.Transmission;
 import org.usfirst.frc.team6882.interfaces.Manipulators;
@@ -115,7 +116,8 @@ public class hardware {
 	// ------------------------------------
 	// Double Solenoids
 	// ------------------------------------
-
+	public static DoubleSolenoid leftGrabber = new DoubleSolenoid(0,1);
+	
 	// ------------------------------------
 	// Single Solenoids
 	// ------------------------------------

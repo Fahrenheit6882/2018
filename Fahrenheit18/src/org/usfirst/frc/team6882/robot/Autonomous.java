@@ -20,6 +20,7 @@ public class Autonomous {
 	static char ourSwitch;
 	static char Scale;
 	static char startPosition;
+	// tempTick variable is being used in lieu of the encoders ticks for now
 	static int tempTick;
 
 	/**
@@ -40,9 +41,9 @@ public class Autonomous {
 		startPosition = 'L';
 		tempTick = 0;
 	} // end Init
-
+//Added CAPTURESWITCH state 
 	public static enum State {
-		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD, RESET, BLOCK, STOP, FINISH
+		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, DRIVETURNLEFT, AUTOLINEFORWARD, RESET, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -50,6 +51,12 @@ public class Autonomous {
 	/**
 	 * User Periodic code for autonomous mode should go here. Will be called
 	 * periodically at a regular rate while the robot is in autonomous mode. *
+	 */
+	/**
+	 * 
+	 */
+	/**
+	 * 
 	 */
 	public static void periodic() {
 		// if Autonomous is not disabled (i.e. Autonomous is enabled) do some things
@@ -75,18 +82,45 @@ public class Autonomous {
 				case AUTOLINEFORWARD:
 					tempTick++;
 					hardware.driveBase.drive(1, 1);
-					//Encoder Code will go here
-					//set condition gone far enough which is 168 inches
-					if (tempTick > 100)
+					//change tempTick to the ticks on the encoders for 168 inches
+					if (tempTick > 168)
 					{
 						hardware.driveBase.stop();
-						autoState = State.CAPTURESWITCH;
-					}
-					//end curly bracket of condition goes here	
+						autoState = State.FIELDSWITCHTURN;
+					}	
 					break;
+				case FIELDSWITCHTURN:
+					// Tried to use if statements to measure a variable that constantly counts up. The flaw is that numbers keep getting higher
+					// created a turn state for left and right turns the robot needs to
+					tempTick++;
+					/* if(startPosition == 'R' && ourSwitch == 'R') {
+						hardware.driveBase.drive(-1, 1);
+						//set encoder values to how many ticks we need to turn
+						if(tempTick > 10 && tempTick < 15) {
+							hardware.driveBase.stop();
+							autoState = State.CAPTURESWITCH;
+						}
+						else if(tempTick > 15) {
+							hardware.driveBase.drive(1, -1);
+							
+							autoState = State.FIELDSWITCHTURN;
+						}
+					} */
+					if(startPosition == 'R' && ourSwitch == 'R') {
+						while(tempTick > 15 && tempTick < 10) {
+							hardware.driveBase.drive(-1, 1);
+						}
+							hardware.driveBase.stop();
+							autoState = State.CAPTURESWITCH;
+					}
+					break; 
+				//TODO CAPTURESWITCH need to write code for capturing the switch
 				case CAPTURESWITCH:
-					
-					
+					hardware.liftTalon.set(1);
+					//change tempTick to the ticks on the encoders 19 inches is the goal.
+					if(tempTick > 19) {
+						
+					}
 					break;
 				case FINISH:
 	
