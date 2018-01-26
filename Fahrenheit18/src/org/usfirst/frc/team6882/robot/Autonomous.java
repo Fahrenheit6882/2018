@@ -42,7 +42,7 @@ public class Autonomous {
 	} // end Init
 
 	public static enum State {
-		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD, RESET, BLOCK, STOP, FINISH
+		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD,REVERSEDRIVE, EXCHANGEGIVE, RESET, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -87,6 +87,19 @@ public class Autonomous {
 				case CAPTURESWITCH:
 					
 					
+					break;
+				case REVERSEDRIVE:
+					tempTick++;
+					hardware.driveBase.drive (1, 1);
+					//Encoder will also go here
+				//set condition gone far enough, which is -168 in.
+					if (tempTick< -100)
+					{
+						hardware.driveBase.stop();
+						autoState = State.EXCHANGEGIVE; 
+					}
+					//End curly bracket of condition here
+					//The state: EXCHANGEGIVE will make sure that the arm is lowered and insert the cube into the exchange
 					break;
 				case FINISH:
 	
