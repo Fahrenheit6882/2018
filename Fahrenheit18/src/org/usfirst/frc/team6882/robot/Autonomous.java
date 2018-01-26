@@ -42,7 +42,7 @@ public class Autonomous {
 	} // end Init
 
 	public static enum State {
-		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD, RESET, BLOCK, STOP, FINISH
+		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD, RESETLIFT, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -88,6 +88,12 @@ public class Autonomous {
 					
 					
 					break;
+				case RESETLIFT:
+					hardware.driveBase.drive(-1, -1);
+					//Need to do gear change to slowSpeedFactor in here from transmission to go in reverse slowly
+					//Need to reset lift motors at the same time
+				
+					
 				case FINISH:
 	
 					break;
