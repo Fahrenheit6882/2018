@@ -60,7 +60,8 @@ public class Autonomous {
 			switch (autoState) {
 				case START:
 					hardware.driveBase.stop();
-					String rawData = hardware.driverStation.getInstance().getGameSpecificMessage();
+					String rawData = hardware.driverStation.getGameSpecificMessage();
+					
 					if(rawData != "") {
 						ourSwitch = rawData.charAt(0);
 						Scale = rawData.charAt(1);
@@ -73,47 +74,26 @@ public class Autonomous {
 						}
 					}
 					break;
+				
 				case AUTOLINEFORWARD:
-//					tempTick++;
-//					hardware.driveBase.drive(1, 1);
-	
 					//drive forward 168 inches before changing states
 					if (hardware.driveBase.driveByInches(1.0, 168))
 					{
 						hardware.driveBase.stop();
+						
+						// TODO add logic for when to turn towards the switch
 						autoState = State.FIELDSWITCHTURN;
 					}	
 					break;
+				
 				case FIELDSWITCHTURN:
-					// Tried to use if statements to measure a variable that constantly counts up. The flaw is that numbers keep getting higher
-					// created a turn state for left and right turns the robot needs to
-					tempTick++;
-					/* if(startPosition == 'R' && ourSwitch == 'R') {
-						hardware.driveBase.drive(-1, 1);
-						//set encoder values to how many ticks we need to turn
-						if(tempTick > 10 && tempTick < 15) {
-							hardware.driveBase.stop();
-							autoState = State.CAPTURESWITCH;
-						}
-						else if(tempTick > 15) {
-							hardware.driveBase.drive(1, -1);
-							
-							autoState = State.FIELDSWITCHTURN;
-						}
-					} */
-					//turning with the driveBase method
-//					if(startPosition == 'R' && ourSwitch == 'R') {
-//						while(tempTick > 15 && tempTick < 10) {
-//							hardware.driveBase.drive(-1, 1);
-//						}
-//							hardware.driveBase.stop();
-//							autoState = State.LIFTSWITCH;
-//					}
-					
+					// TODO turn 90 degrees towards switch
 					
 					break; 
-				//TODO LIFTSWITCH need to write code for lifting block
+					
 				case LIFTSWITCH:
+					//TODO LIFTSWITCH need to write code for lifting block
+					
 					hardware.liftTalon.set(1);
 					//change tempTick to the ticks on the encoders 19 inches is the goal.
 					if(hardware.driveBase.driveByInches(0.2, 39.25)) {
@@ -121,26 +101,33 @@ public class Autonomous {
 						autoState = State.DROPBLOCK;
 					}
 					break;
-				case DROPBLOCK:
 					
+				case DROPBLOCK:
+					// TODO code DROPBLOCK
 					break;
+					
 				case RESETLIFT:
+					// TODO back up and lower the lift
 					hardware.driveBase.driveByInches(-0.3, 39.25);
 					//Need to reset lift motors at the same time
 					hardware.liftTalon.set(-1);
 					break;
+					
 				case REVERSE:
-					hardware.driveBase.driveByInches(-1, 80);
-					autoState = State.AFTERREVERSETURN;
+					if(hardware.driveBase.driveByInches(-1, 80)) {
+						autoState = State.AFTERREVERSETURN;
+					}
 					break;
+					
 				case AFTERREVERSETURN:
 					if(startPosition == 'R' & ourSwitch == 'R') {
 						hardware.driveBase.stop();
 						autoState = State.APPROACHLASTEXCHANGETURN;
 					}
 					break;
+					
 				case FINISH:
-	
+					hardware.driveBase.stop();
 					break;
 	
 				default:
