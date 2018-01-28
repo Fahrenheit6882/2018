@@ -43,7 +43,7 @@ public class Autonomous {
 	} // end Init
 //Added CAPTURESWITCH state 
 	public static enum State {
-		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, DRIVETURNLEFT, AUTOLINEFORWARD, RESETLIFT, BLOCK, STOP, FINISH
+		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, AUTOLINEFORWARD, RESETLIFT, DROPBLOCK, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -74,10 +74,11 @@ public class Autonomous {
 					}
 					break;
 				case AUTOLINEFORWARD:
-					tempTick++;
-					hardware.driveBase.drive(1, 1);
-					//change tempTick to the ticks on the encoders for 168 inches
-					if (tempTick > 168)
+//					tempTick++;
+//					hardware.driveBase.drive(1, 1);
+	
+					//drive forward 168 inches before changing states
+					if (hardware.driveBase.driveByInches(1.0, 168))
 					{
 						hardware.driveBase.stop();
 						autoState = State.FIELDSWITCHTURN;
@@ -100,25 +101,27 @@ public class Autonomous {
 							autoState = State.FIELDSWITCHTURN;
 						}
 					} */
+					
 					if(startPosition == 'R' && ourSwitch == 'R') {
 						while(tempTick > 15 && tempTick < 10) {
 							hardware.driveBase.drive(-1, 1);
 						}
 							hardware.driveBase.stop();
-							autoState = State.CAPTURESWITCH;
+							autoState = State.LIFTSWITCH;
 					}
 					break; 
-				//TODO CAPTURESWITCH need to write code for capturing the switch
-				case CAPTURESWITCH:
+				//TODO LIFTSWITCH need to write code for lifting block
+				case LIFTSWITCH:
 					hardware.liftTalon.set(1);
 					//change tempTick to the ticks on the encoders 19 inches is the goal.
 					if(tempTick > 19) {
-						
+						hardware.liftTalon.set(0);
+						autoState = State.DROPBLOCK;
 					}
 					break;
+				case DROPBLOCK:
 				case RESETLIFT:
 					hardware.driveBase.drive(-1, -1);
-					//Need to do gear change to slowSpeedFactor in here from transmission to go in reverse slowly
 					//Need to reset lift motors at the same time
 				
 					

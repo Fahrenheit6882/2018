@@ -68,6 +68,7 @@
 
 package org.usfirst.frc.team6882.robot;
 
+import org.usfirst.frc.team6882.globals.constants;
 import org.usfirst.frc.team6882.globals.hardware;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -214,6 +215,9 @@ public class Robot extends IterativeRobot {
 		// User code goes below here
 		hardware.leftSpark1.setInverted(true);
 		hardware.leftSpark2.setInverted(true);
+		hardware.leftDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
+		hardware.rightDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
+		
 
 		// User code goes above here
 		// =========================================================

@@ -14,6 +14,8 @@
 // ====================================================================
 package org.usfirst.frc.team6882.globals;
 
+
+
 // -------------------------------------------------------
 /**
  * puts all of the hardware declarations into one place. In addition, it makes
@@ -60,5 +62,10 @@ public class constants {
 	// Dead Zones
 	public static double joystickDeadZone = 0.2;
 	public static double gamepadDeadZone = 0.1;
-
+	
+	//Encoder Constants
+	public static double wheelRadius = 3;
+	public static double wheelCirc = 2 * Math.PI * wheelRadius;
+	public static double encPulsePerRot = 1440;
+	public static double inchesPerPulse = wheelCirc / encPulsePerRot;
 } // end class
