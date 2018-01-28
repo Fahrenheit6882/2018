@@ -64,8 +64,16 @@ public class constants {
 	public static double gamepadDeadZone = 0.1;
 	
 	//Encoder Constants
-	public static double wheelRadius = 3;
-	public static double wheelCirc = 2 * Math.PI * wheelRadius;
 	public static double encPulsePerRot = 1440;
+	
+	//Forward Motion Calculations
+	public static double wheelRadius = 3; //inches
+	public static double wheelCirc = 2 * Math.PI * wheelRadius;
 	public static double inchesPerPulse = wheelCirc / encPulsePerRot;
+	
+	//Turn calculations
+	public static double turnRadius = 13.75;//inches
+	public static double turnCirc = Math.PI * 2 * turnRadius;
+	public static double inchesPerDegree = (turnCirc/360);
+	
 } // end class
