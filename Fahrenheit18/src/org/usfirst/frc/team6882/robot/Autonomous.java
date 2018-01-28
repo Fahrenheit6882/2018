@@ -38,12 +38,12 @@ public class Autonomous {
 		
 		//TODO read the switch
 		// setting starting position to L for test
-		startPosition = 'L';
+		//startPosition = 'L';
 		tempTick = 0;
 	} // end Init
 //Added CAPTURESWITCH state 
 	public static enum State {
-		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, AUTOLINEFORWARD, RESETLIFT, DROPBLOCK, FINISH
+		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, AUTOLINEFORWARD, RESETLIFT, DROPBLOCK, REVERSE, AFTERREVERSETURN, APPROACHLASTEXCHANGETURN, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -101,30 +101,44 @@ public class Autonomous {
 							autoState = State.FIELDSWITCHTURN;
 						}
 					} */
+					//turning with the driveBase method
+//					if(startPosition == 'R' && ourSwitch == 'R') {
+//						while(tempTick > 15 && tempTick < 10) {
+//							hardware.driveBase.drive(-1, 1);
+//						}
+//							hardware.driveBase.stop();
+//							autoState = State.LIFTSWITCH;
+//					}
 					
-					if(startPosition == 'R' && ourSwitch == 'R') {
-						while(tempTick > 15 && tempTick < 10) {
-							hardware.driveBase.drive(-1, 1);
-						}
-							hardware.driveBase.stop();
-							autoState = State.LIFTSWITCH;
-					}
+					
 					break; 
 				//TODO LIFTSWITCH need to write code for lifting block
 				case LIFTSWITCH:
 					hardware.liftTalon.set(1);
 					//change tempTick to the ticks on the encoders 19 inches is the goal.
-					if(tempTick > 19) {
+					if(hardware.driveBase.driveByInches(0.2, 39.25)) {
 						hardware.liftTalon.set(0);
 						autoState = State.DROPBLOCK;
 					}
 					break;
 				case DROPBLOCK:
-				case RESETLIFT:
-					hardware.driveBase.drive(-1, -1);
-					//Need to reset lift motors at the same time
-				
 					
+					break;
+				case RESETLIFT:
+					hardware.driveBase.driveByInches(-0.3, 39.25);
+					//Need to reset lift motors at the same time
+					hardware.liftTalon.set(-1);
+					break;
+				case REVERSE:
+					hardware.driveBase.driveByInches(-1, 80);
+					autoState = State.AFTERREVERSETURN;
+					break;
+				case AFTERREVERSETURN:
+					if(startPosition == 'R' & ourSwitch == 'R') {
+						hardware.driveBase.stop();
+						autoState = State.APPROACHLASTEXCHANGETURN;
+					}
+					break;
 				case FINISH:
 	
 					break;

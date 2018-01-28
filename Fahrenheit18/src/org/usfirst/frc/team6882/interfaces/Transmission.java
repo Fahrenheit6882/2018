@@ -66,6 +66,13 @@ public class Transmission {
 		right2.set(currentSpeed * speedRight);
 	}
 	
+	/**
+	 * Drive the robot forward by a variable number of inches
+	 * 
+	 * @param speed - speed the robot should drive forward
+	 * @param inches - desired number of inches to travel
+	 * @return - true if traveled desired distance; false otherwise
+	 */
 	public boolean driveByInches(double speed, double inches) {
 		// doubles to hold speed for left and right side
 		double left = 0.0;
@@ -91,7 +98,7 @@ public class Transmission {
 		//call to make motors move 
 		this.drive(left, right);
 		
-		//if robot has not gone far enough set encoder to true 
+		//if robot has gone far enough set encoder to true 
 		if(left == 0 && right == 0) {
 			encReset = true;
 		}
@@ -99,6 +106,64 @@ public class Transmission {
 		//return encReset: true if gone far enough, false otherwise
 		return(encReset);
 	}
+	
+	/**
+	 * Turn the robot about its center line a variable number of degrees
+	 * 
+	 * @param degrees - desired number of degrees to turn
+	 * @param rightTurn - true if turning right; false otherwise
+	 * @param speed - speed to turn
+	 * @return - true when turned far enough; false otherwise
+	 */
+	public boolean turnDegrees(double degrees, boolean rightTurn, double speed) {
+		// variables for storing driving speed on the left and right
+		double left = 0.0;
+		double right = 0.0;
+		
+		// convert from degrees to inches each wheel will travel
+		double inchesToTravel = degrees * constants.inchesPerDegree;
+		
+		//Reseting the encoder
+		if(encReset) {
+			leftEnc.reset();
+			rightEnc.reset();
+			encReset = false;
+		}
+		
+		// if turning right, left wheel goes forward and right wheel goes backwards
+		if (rightTurn){
+			//Left forward
+			if(leftEnc.getDistance() < inchesToTravel) {
+				left = speed;
+			}
+			
+			//Right backward
+			if(rightEnc.getDistance() > -(inchesToTravel)) {
+				right = -speed;
+			}
+		}
+		// turning left, so left wheel goes backwards and right wheel goes forwards
+		else {
+			//Left backward
+			if(leftEnc.getDistance() > -(inchesToTravel)) {
+				left = -speed;
+			}
+			
+			//Right forward
+			if(rightEnc.getDistance() < inchesToTravel) {
+				right = speed;
+			}
+			// Move the wheels
+			this.drive(left, right);
+			//If turned far enough, prepare for next call via encReset
+			if(left == 0 && right == 0) {
+				encReset = true;
+			}
+		}
+		// return state of resetEnc - true if turned far enough; false if turned not far enough
+		return(encReset);
+	}
+		
 	/**
 	 * The robot will change gears.
 	 * 
@@ -106,10 +171,12 @@ public class Transmission {
 	 *            - indicates the state of the button
 	 */
 	public void changeGear(boolean button) {
+		// if the button is pressed and the gearButtonState indicates that it has not been changed, change the gear
 		if (button && !gearButtonState) {
 			fast = !fast;
 		}
 
+		// set the gearButtonState to match the button state
 		gearButtonState = button;
 	}
 }
