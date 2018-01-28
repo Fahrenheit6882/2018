@@ -36,7 +36,7 @@ public class hardware {
 	// **********************************************************
 	// DIGITAL I/O CLASSES
 	// **********************************************************
-
+	
 	// ====================================
 	// PWM classes
 	// ====================================
@@ -78,6 +78,9 @@ public class hardware {
 	// Single and double throw switches
 	// ------------------------------------
 	public static DigitalInput disableAutoSwitch = new DigitalInput(20);
+	
+	public static DigitalInput leftPosition = new DigitalInput(4);
+	public static DigitalInput rightPosition = new DigitalInput(5);
 
 	// ------------------------------------
 	// Gear Tooth Sensors
@@ -115,8 +118,8 @@ public class hardware {
 	// ------------------------------------
 	// Double Solenoids
 	// ------------------------------------
-	public static DoubleSolenoid leftGrabber = new DoubleSolenoid(0,1);
-	public static DoubleSolenoid rightGrabber = new DoubleSolenoid(2,3);
+	//public static DoubleSolenoid leftGrabber = new DoubleSolenoid(0,1);
+	//public static DoubleSolenoid rightGrabber = new DoubleSolenoid(2,3);
 	
 	// ------------------------------------
 	// Single Solenoids

@@ -298,7 +298,11 @@ public class Robot extends IterativeRobot {
 		// =========================================================
 		// User code goes below here
 		// =========================================================
-
+		boolean leftPos = hardware.leftPosition.get();
+		boolean rightPos = hardware.rightPosition.get();
+		
+		System.out.println("Left position = " + !leftPos);
+		System.out.println("Right position = " + !rightPos);
 		// =========================================================
 		// User code goes above here
 		// =========================================================
