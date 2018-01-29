@@ -42,7 +42,7 @@ public class Autonomous {
 	} // end Init
 
 	public static enum State {
-		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD,REVERSEDRIVE, EXCHANGEGIVE, RESET, BLOCK, STOP, FINISH
+		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD, REVERSEDRIVE, EXCHANGEGIVE, AFTERREVERSETURN, RESET, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -90,10 +90,11 @@ public class Autonomous {
 					break;
 				case REVERSEDRIVE:
 					tempTick++;
-					hardware.driveBase.drive (1, 1);
+					hardware.driveBase.drive (-1, -1);
 					//Encoder will also go here
 				//set condition gone far enough, which is -168 in.
-					if (tempTick< -100)
+					if (tempTick > 100)
+						//I don not know if the encoder can count backwards, this is if it cannot cout backwards
 					{
 						hardware.driveBase.stop();
 						autoState = State.EXCHANGEGIVE; 
