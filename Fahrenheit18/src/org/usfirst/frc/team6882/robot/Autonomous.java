@@ -20,6 +20,7 @@ public class Autonomous {
 	static char ourSwitch;
 	static char Scale;
 	static char startPosition;
+	// tempTick variable is being used in lieu of the encoders ticks for now
 	static int tempTick;
 
 	/**
@@ -37,12 +38,12 @@ public class Autonomous {
 		
 		//TODO read the switch
 		// setting starting position to L for test
-		startPosition = 'L';
+		//startPosition = 'L';
 		tempTick = 0;
 	} // end Init
 
 	public static enum State {
-		START, CAPTURESWITCH, CENTERAPPROACHSWITCH, DRIVETURNRIGHT, DRIVETURNLEFT, AUTOLINEFORWARD, REVERSEDRIVE, EXCHANGEGIVE, AFTERREVERSETURN, RESET, BLOCK, STOP, FINISH
+		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, AUTOLINEFORWARD, RESETLIFT, DROPBLOCK, REVERSE, REVERSEDRIVE, EXCHANGEGIVE, AFTERREVERSETURN, APPROACHLASTEXCHANGETURN, RESET, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -59,7 +60,8 @@ public class Autonomous {
 			switch (autoState) {
 				case START:
 					hardware.driveBase.stop();
-					String rawData = hardware.driverStation.getInstance().getGameSpecificMessage();
+					String rawData = hardware.driverStation.getGameSpecificMessage();
+					
 					if(rawData != "") {
 						ourSwitch = rawData.charAt(0);
 						Scale = rawData.charAt(1);
@@ -72,22 +74,59 @@ public class Autonomous {
 						}
 					}
 					break;
+				
 				case AUTOLINEFORWARD:
-					tempTick++;
-					hardware.driveBase.drive(1, 1);
-					//Encoder Code will go here
-					//set condition gone far enough which is 168 inches
-					if (tempTick > 100)
+					//drive forward 168 inches before changing states
+					if (hardware.driveBase.driveByInches(1.0, 168))
 					{
 						hardware.driveBase.stop();
-						autoState = State.CAPTURESWITCH;
+						
+						// TODO add logic for when to turn towards the switch
+						autoState = State.FIELDSWITCHTURN;
+					}	
+					break;
+				
+				case FIELDSWITCHTURN:
+					// TODO turn 90 degrees towards switch
+					
+					break; 
+					
+				case LIFTSWITCH:
+					//TODO LIFTSWITCH need to write code for lifting block
+					
+					hardware.liftTalon.set(1);
+					//change tempTick to the ticks on the encoders 19 inches is the goal.
+					if(hardware.driveBase.driveByInches(0.2, 39.25)) {
+						hardware.liftTalon.set(0);
+						autoState = State.DROPBLOCK;
 					}
-					//end curly bracket of condition goes here	
 					break;
-				case CAPTURESWITCH:
 					
+				case DROPBLOCK:
+					// TODO code DROPBLOCK
+					break;
+					
+				case RESETLIFT:
+					// TODO back up and lower the lift
+					hardware.driveBase.driveByInches(-0.3, 39.25);
+					//Need to reset lift motors at the same time
+					hardware.liftTalon.set(-1);
+					break;
+					
+				case REVERSE:
+					if(hardware.driveBase.driveByInches(-1, 80)) {
+						autoState = State.AFTERREVERSETURN;
+					}
+					break;
+									
+				case AFTERREVERSETURN:
+					if(startPosition == 'R' & ourSwitch == 'R') {
+						hardware.driveBase.stop();
+						autoState = State.APPROACHLASTEXCHANGETURN;
+					}
 					
 					break;
+
 				case REVERSEDRIVE:
 					tempTick++;
 					hardware.driveBase.drive (-1, -1);
@@ -103,7 +142,7 @@ public class Autonomous {
 					//The state: EXCHANGEGIVE will make sure that the arm is lowered and insert the cube into the exchange
 					break;
 				case FINISH:
-	
+					hardware.driveBase.stop();
 					break;
 	
 				default:

@@ -63,12 +63,14 @@ public class Teleop {
 		// =================================================================
 		// OPERATOR CONTROLS
 		// =================================================================
-
+		// determine the reading of the gamePad joystick to determine how fast to move the lift and which direction
 		if (Math.abs(hardware.gamePad1.getRawAxis(constants.gpRightY)) > constants.gamepadDeadZone) {
 			speedLift = hardware.gamePad1.getRawAxis(constants.gpRightY);
 		} else {
 			speedLift = 0;
 		}
+		
+		// move the lift
 		hardware.manipulators.moveLift(speedLift);
 
 		// =================================================================
@@ -79,8 +81,7 @@ public class Teleop {
 		// Driving code
 		// =================================================================
 
-		// Change gears while driving
-
+		// Change gears if the button is pressed and it has not already changed gears.
 		hardware.driveBase.changeGear(hardware.rightStick.getRawButtonPressed(3));
 
 		// Joystick speed controls for driving

@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 import org.usfirst.frc.team6882.interfaces.Transmission;
 import org.usfirst.frc.team6882.interfaces.Manipulators;
@@ -35,7 +36,7 @@ public class hardware {
 	// **********************************************************
 	// DIGITAL I/O CLASSES
 	// **********************************************************
-
+	
 	// ====================================
 	// PWM classes
 	// ====================================
@@ -47,8 +48,6 @@ public class hardware {
 	public static Spark leftSpark2 = new Spark(2);
 	public static Spark rightSpark1 = new Spark(1);
 	public static Spark rightSpark2 = new Spark(0);
-
-	public static Transmission driveBase = new Transmission(leftSpark1, leftSpark2, rightSpark1, rightSpark2);
 
 	// ------------------------------------
 	// Jaguar classes
@@ -79,6 +78,9 @@ public class hardware {
 	// Single and double throw switches
 	// ------------------------------------
 	public static DigitalInput disableAutoSwitch = new DigitalInput(20);
+	
+	public static DigitalInput leftPosition = new DigitalInput(4);
+	public static DigitalInput rightPosition = new DigitalInput(5);
 
 	// ------------------------------------
 	// Gear Tooth Sensors
@@ -87,9 +89,10 @@ public class hardware {
 	// ------------------------------------
 	// Encoders
 	// ------------------------------------
-	// public static Encoder leftEncoder = new Encoder(0, 1);
-	// public static Encoder rightEncoder = new Encoder(2, 3);
+	public static Encoder leftDriveEncoder = new Encoder(0, 1);
+	public static Encoder rightDriveEncoder = new Encoder(2, 3);
 
+	public static Transmission driveBase = new Transmission(leftSpark1, leftSpark2, rightSpark1, rightSpark2, leftDriveEncoder, rightDriveEncoder);
 	// -------------------------------------
 	// Red Light/IR Sensor class
 	// -------------------------------------
@@ -115,7 +118,9 @@ public class hardware {
 	// ------------------------------------
 	// Double Solenoids
 	// ------------------------------------
-
+	//public static DoubleSolenoid leftGrabber = new DoubleSolenoid(0,1);
+	//public static DoubleSolenoid rightGrabber = new DoubleSolenoid(2,3);
+	
 	// ------------------------------------
 	// Single Solenoids
 	// ------------------------------------
