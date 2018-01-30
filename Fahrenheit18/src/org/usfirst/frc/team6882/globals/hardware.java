@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 
 import org.usfirst.frc.team6882.interfaces.Transmission;
 import org.usfirst.frc.team6882.interfaces.Manipulators;
@@ -149,7 +151,7 @@ public class hardware {
 	// -------------------------------------
 	// Axis/USB Camera class
 	// -------------------------------------
-
+	public static UsbCamera POVCamera = CameraServer.getInstance().startAutomaticCapture(0);
 	// -------------------------------------
 	// declare the USB camera server and the
 	// USB camera it serves
