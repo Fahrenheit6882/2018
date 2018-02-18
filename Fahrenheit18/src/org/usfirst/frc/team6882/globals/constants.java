@@ -24,7 +24,7 @@ package org.usfirst.frc.team6882.globals;
 
 public class constants {
 	// ------------------------------------
-	// Public Constants
+	// Gamepad Controller Constants
 	// ------------------------------------
 	// Game Pad Axis Indexes
 	public static final int gpLeftX = 0;
@@ -45,10 +45,6 @@ public class constants {
 	public static final int gpBtnStart = 7;
 	public static final int gpBtnLStick = 8;
 	public static final int gpBtnRStick = 9;
-
-	// -------------------------------------
-	// Private Constants
-	// -------------------------------------
 
 	// ---------------------------------------
 	// Hardware Tunables

@@ -43,6 +43,7 @@ import org.usfirst.frc.team6882.globals.constants;
  */
 public class Teleop {
 
+	// Initialize variables for reading joystick inputs - will be used later
 	static double speedLeft = 0.0;
 	static double speedRight = 0.0;
 	static double speedLift = 0.0;
@@ -63,7 +64,11 @@ public class Teleop {
 		// =================================================================
 		// OPERATOR CONTROLS
 		// =================================================================
-		// determine the reading of the gamePad joystick to determine how fast to move the lift and which direction
+		
+		//------------------------------------------------------------------
+		// LIFT CONTROLS
+		//------------------------------------------------------------------
+		// joystick speed control for elevator
 		if (Math.abs(hardware.gamePad1.getRawAxis(constants.gpRightY)) > constants.gamepadDeadZone) {
 			speedLift = hardware.gamePad1.getRawAxis(constants.gpRightY);
 		} else {
@@ -72,154 +77,49 @@ public class Teleop {
 		
 		// move the lift
 		hardware.manipulators.moveLift(speedLift);
+		
+		//------------------------------------------------------------------
+		// INTAKE CONTROLS
+		//------------------------------------------------------------------
+		
+		//------------------------------------------------------------------
+		// MANIPULATOR ACTUATION
+		//------------------------------------------------------------------
+
+		
 
 		// =================================================================
-		// CAMERA CODE
+		// DRIVER CONTROLS
 		// =================================================================
 
-		// =================================================================
-		// Driving code
-		// =================================================================
-
+		//------------------------------------------------------------------
+		// GEAR CHANGES
+		//------------------------------------------------------------------
 		// Change gears if the button is pressed and it has not already changed gears.
 		hardware.driveBase.changeGear(hardware.rightStick.getRawButtonPressed(3));
 
+		//------------------------------------------------------------------
+		// DIRECTIONAL CONTROLS
+		//------------------------------------------------------------------
+		
 		// Joystick speed controls for driving
 		if (Math.abs(hardware.leftStick.getY()) > constants.joystickDeadZone) {
-			// hardware.leftSpark1.set(hardware.leftStick.getY() * constants.fastSpeedFactor
-			// * -1);
-			// hardware.leftSpark2.set(hardware.leftStick.getY() * constants.fastSpeedFactor
-			// * -1);
 			speedLeft = hardware.leftStick.getY();
 		} else {
-			// hardware.leftSpark1.set(0);
-			// hardware.leftSpark2.set(0);
 			speedLeft = 0;
 		}
 
 		if (Math.abs(hardware.rightStick.getY()) > constants.joystickDeadZone) {
-			// hardware.rightSpark1.set(hardware.rightStick.getY() *
-			// constants.fastSpeedFactor * 1);
-			// hardware.rightSpark2.set(hardware.rightStick.getY() *
-			// constants.fastSpeedFactor * 1);
 			speedRight = hardware.rightStick.getY();
 		} else {
-			// hardware.rightSpark1.set(0);
-			// hardware.rightSpark2.set(0);
 			speedRight = 0;
 		}
-
+		
+		// Drive the robot according to Joystick input
 		hardware.driveBase.drive(speedLeft, speedRight);
 
 	}
 	// end
 	// Periodic
-
-	/**
-	 * stores print statements for future use in the print "bank", statements are
-	 * commented out when not in use, when you write a new print statement,
-	 * "deposit" the statement in the correct "bank" do not "withdraw" statements,
-	 * unless directed to.
-	 * 
-	 * NOTE: Keep the groupings below, which correspond in number and order as the
-	 * hardware declarations in the HARDWARE class
-	 */
-	public static void printStatements() {
-
-		// =================================
-		// Motor
-		// Prints the value of motors
-		// =================================
-
-		// =================================
-		// CAN items
-		// prints value of the CAN controllers
-		// =================================
-
-		// =================================
-		// Relay
-		// =================================
-
-		// =================================
-		// Digital Inputs
-		// =================================
-
-		// ---------------------------------
-		// Switches
-		// prints state of switches
-		// ---------------------------------
-
-		// ---------------------------------
-		// Encoders
-		// ---------------------------------
-
-		// ---------------------------------
-		// Red Light/IR Sensors
-		// prints the state of the sensor
-		// ---------------------------------
-
-		// =================================
-		// Pneumatics
-		// =================================
-
-		// ---------------------------------
-		// Compressor
-		// prints information on the compressor
-		// ---------------------------------
-
-		// ---------------------------------
-		// Solenoids
-		// prints the state of solenoids
-		// ---------------------------------
-
-		// =================================
-		// Analogs
-		// =================================
-
-		// ---------------------------------
-		// pots
-		// where the pot is turned to
-		// ---------------------------------
-
-		// --------------------------
-		// Sonar/UltraSonic
-		// --------------------------
-
-		// =========================
-		// Servos
-		// =========================
-		//
-		// ================
-		// GYRO
-		// =================
-
-		// =================================
-		// Connection Items
-		// =================================
-
-		// ---------------------------------
-		// Cameras
-		// prints any camera information required
-		// ---------------------------------
-
-		// =================================
-		// Driver station
-		// =================================
-
-		// ---------------------------------
-		// Joysticks
-		// information about the joysticks
-		// ---------------------------------
-
-		// ---------------------------------
-		// timers
-		// what time does the timer have now
-		// ---------------------------------
-
-	} // end printStatements
-
-	/*
-	 * ================================ Constants ================================
-	 */
 
 } // end class

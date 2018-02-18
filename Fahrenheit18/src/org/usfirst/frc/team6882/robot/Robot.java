@@ -213,8 +213,15 @@ public class Robot extends IterativeRobot {
 
 		// =========================================================
 		// User code goes below here
-		hardware.leftSpark1.setInverted(true);
-		hardware.leftSpark2.setInverted(true);
+		
+		// Invert motor controllers for right side of drive so positive is forward
+		hardware.rightSpark1.setInverted(true);
+		hardware.rightSpark2.setInverted(true);
+		
+		// Invert motor controller for elevator so positive is up
+		hardware.liftTalon.setInverted(true);
+		
+		// Set drive encoders distance per pulse
 		hardware.leftDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
 		hardware.rightDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
 		

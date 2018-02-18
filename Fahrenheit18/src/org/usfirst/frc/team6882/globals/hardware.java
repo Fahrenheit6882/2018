@@ -15,7 +15,6 @@
 package org.usfirst.frc.team6882.globals;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
@@ -50,28 +49,24 @@ public class hardware {
 	public static Spark leftSpark2 = new Spark(2);
 	public static Spark rightSpark1 = new Spark(1);
 	public static Spark rightSpark2 = new Spark(0);
-
+	
+	public static Spark intakeSparkL = new Spark(4);
+	public static Spark intakeSparkR = new Spark(5);
+	
 	// ------------------------------------
-	// Jaguar classes
+	// Encoders
 	// ------------------------------------
-
-	// ------------------------------------
-	// Talon classes
-	// ------------------------------------
-	public static Talon liftTalon = new Talon(4);
-	public static Manipulators manipulators = new Manipulators(liftTalon);
-
-	// ------------------------------------
-	// Victor Classes
-	// ------------------------------------
+	public static Encoder leftDriveEncoder = new Encoder(6, 7);
+	public static Encoder rightDriveEncoder = new Encoder(8, 9);
 
 	// ====================================
 	// CAN classes
 	// ====================================
-
-	// ====================================
-	// Relay classes
-	// ====================================
+	
+	// ------------------------------------
+	// Talon classes
+	// ------------------------------------
+	public static Talon liftTalon = new Talon(0);
 
 	// ====================================
 	// Digital Inputs
@@ -79,29 +74,11 @@ public class hardware {
 	// ------------------------------------
 	// Single and double throw switches
 	// ------------------------------------
-	public static DigitalInput disableAutoSwitch = new DigitalInput(20);
+	public static DigitalInput disableAutoSwitch = new DigitalInput(0);
 	
-	public static DigitalInput leftPosition = new DigitalInput(4);
-	public static DigitalInput rightPosition = new DigitalInput(5);
+	public static DigitalInput leftPosition = new DigitalInput(1);
+	public static DigitalInput rightPosition = new DigitalInput(2);
 
-	// ------------------------------------
-	// Gear Tooth Sensors
-	// ------------------------------------
-
-	// ------------------------------------
-	// Encoders
-	// ------------------------------------
-	public static Encoder leftDriveEncoder = new Encoder(0, 1);
-	public static Encoder rightDriveEncoder = new Encoder(2, 3);
-
-	public static Transmission driveBase = new Transmission(leftSpark1, leftSpark2, rightSpark1, rightSpark2, leftDriveEncoder, rightDriveEncoder);
-	// -------------------------------------
-	// Red Light/IR Sensor class
-	// -------------------------------------
-
-	// ====================================
-	// I2C Classes
-	// ====================================
 
 	// **********************************************************
 	// SOLENOID I/O CLASSES
@@ -113,6 +90,7 @@ public class hardware {
 	// ====================================
 	// Pneumatic Control Module
 	// ====================================
+	
 
 	// ====================================
 	// Solenoids
@@ -120,30 +98,12 @@ public class hardware {
 	// ------------------------------------
 	// Double Solenoids
 	// ------------------------------------
-	//public static DoubleSolenoid leftGrabber = new DoubleSolenoid(0,1);
-	//public static DoubleSolenoid rightGrabber = new DoubleSolenoid(2,3);
+	// Forward = extended = down or stowed; Backward = retracted = up in working position
+	public static DoubleSolenoid flipper1 = new DoubleSolenoid(0,1);
+	public static DoubleSolenoid flipper2 = new DoubleSolenoid(2,3);
+
 	
-	// ------------------------------------
-	// Single Solenoids
-	// ------------------------------------
-
-	// **********************************************************
-	// ANALOG I/O CLASSES
-	// **********************************************************
-	// ====================================
-	// Analog classes
-	// ====================================
-	// ------------------------------------
-	// Gyro class
-	// ------------------------------------
-
-	// -------------------------------------
-	// Potentiometers
-	// -------------------------------------
-
-	// -------------------------------------
-	// Sonar/Ultrasonic
-	// -------------------------------------
+	
 
 	// **********************************************************
 	// roboRIO CONNECTIONS CLASSES
@@ -152,10 +112,7 @@ public class hardware {
 	// Axis/USB Camera class
 	// -------------------------------------
 	public static UsbCamera POVCamera = CameraServer.getInstance().startAutomaticCapture(0);
-	// -------------------------------------
-	// declare the USB camera server and the
-	// USB camera it serves
-	// -------------------------------------
+
 
 	// **********************************************************
 	// DRIVER STATION CLASSES
@@ -172,5 +129,13 @@ public class hardware {
 	public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
 	public static Joystick gamePad1 = new Joystick(2);
+	
+
+	
+	// **********************************************************
+	// DRIVE AND MANIPULATOR CLASSES
+	// **********************************************************
+	public static Manipulators manipulators = new Manipulators(liftTalon, flipper1, flipper2);
+	public static Transmission driveBase = new Transmission(leftSpark1, leftSpark2, rightSpark1, rightSpark2, leftDriveEncoder, rightDriveEncoder);
 
 } // end class
