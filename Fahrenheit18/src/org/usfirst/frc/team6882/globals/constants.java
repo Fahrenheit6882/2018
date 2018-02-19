@@ -53,7 +53,7 @@ public class constants {
 	// Speed Factors
 	public static double fastSpeedFactor = 0.6;
 	public static double slowSpeedFactor = 0.2;
-	public static double liftSpeedFactor = 0.5;
+	public static double liftSpeedFactor = 0.3;
 
 	// Dead Zones
 	public static double joystickDeadZone = 0.2;

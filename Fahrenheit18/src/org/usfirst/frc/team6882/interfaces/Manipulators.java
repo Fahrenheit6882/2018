@@ -1,10 +1,14 @@
 package org.usfirst.frc.team6882.interfaces;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Talon;
+
+import org.usfirst.frc.team6882.globals.constants;
+
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 
 public class Manipulators {
-	private Talon liftMotor;
+	private WPI_TalonSRX liftMotor;
 	private DoubleSolenoid flipper1;
 	private DoubleSolenoid flipper2;
 
@@ -14,7 +18,7 @@ public class Manipulators {
 	 * @param f1 - DoubleSolenoid for one flipper
 	 * @param f2 - DoubleSolenoid for other flipper
 	 */
-	public Manipulators(Talon liftMotor, DoubleSolenoid f1, DoubleSolenoid f2) {
+	public Manipulators(WPI_TalonSRX liftMotor, DoubleSolenoid f1, DoubleSolenoid f2) {
 		this.liftMotor = liftMotor;
 		this.flipper1 = f1;
 		this.flipper2 = f2;
@@ -26,7 +30,7 @@ public class Manipulators {
 	 */
 	public void moveLift(double speedlift) {
 		// TODO - add logic to prevent driving the motor beyond full extension or full lowered
-		liftMotor.set(speedlift);
+		liftMotor.set(speedlift * constants.liftSpeedFactor);
 	}
 	
 	/**

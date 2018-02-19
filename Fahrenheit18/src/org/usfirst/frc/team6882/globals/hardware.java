@@ -17,7 +17,7 @@ package org.usfirst.frc.team6882.globals;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.Talon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -66,7 +66,7 @@ public class hardware {
 	// ------------------------------------
 	// Talon classes
 	// ------------------------------------
-	public static Talon liftTalon = new Talon(0);
+	public static WPI_TalonSRX liftTalon = new WPI_TalonSRX(0);
 
 	// ====================================
 	// Digital Inputs
