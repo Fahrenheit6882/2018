@@ -19,7 +19,7 @@ public class Autonomous {
 	// Reading game data and storing as char
 	static char ourSwitch;
 	static char Scale;
-	static char startPosition;
+	static char startPosition; 
 	// tempTick variable is being used in lieu of the encoders ticks for now
 	static int tempTick;
 
@@ -55,7 +55,7 @@ public class Autonomous {
 	public static void periodic() {
 		// if Autonomous is not disabled (i.e. Autonomous is enabled) do some things
 		//TODO Put physical switch read back into the if statement
-		if (true) {
+		//if (true) {
 			System.out.println(autoState.toString());
 			switch (autoState) {
 				case START:
@@ -77,7 +77,7 @@ public class Autonomous {
 				
 				case AUTOLINEFORWARD:
 					//drive forward 168 inches before changing states
-					if (hardware.driveBase.driveByInches(1.0, 168))
+					if (hardware.driveBase.driveByInches(0.6, 168))
 					{
 						hardware.driveBase.stop();
 						
@@ -88,6 +88,7 @@ public class Autonomous {
 				
 				case FIELDSWITCHTURN:
 					// TODO turn 90 degrees towards switch
+					hardware.driveBase.turnDegrees(90, true, 0.6);
 					
 					break; 
 					
@@ -150,4 +151,5 @@ public class Autonomous {
 			}
 		}
 	}
-}// end class
+//}
+// end class

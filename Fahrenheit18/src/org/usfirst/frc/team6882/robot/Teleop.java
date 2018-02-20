@@ -33,8 +33,6 @@ package org.usfirst.frc.team6882.robot;
 
 import org.usfirst.frc.team6882.globals.hardware;
 
-import edu.wpi.first.wpilibj.Joystick.AxisType;
-
 import org.usfirst.frc.team6882.globals.constants;
 
 /**
@@ -81,10 +79,24 @@ public class Teleop {
 		//------------------------------------------------------------------
 		// INTAKE CONTROLS
 		//------------------------------------------------------------------
+		if(hardware.gamePad1.getRawAxis(constants.gpLeftTrig) > 0.1)
+		{
+			hardware.manipulators.outtake();
+		}
+		else if(hardware.gamePad1.getRawAxis(constants.gpRightTrig) > 0.1)
+		{
+			hardware.manipulators.intake();
+		}
+		else
+		{
+			hardware.manipulators.stoptake();
+		}
 		
 		//------------------------------------------------------------------
 		// MANIPULATOR ACTUATION
 		//------------------------------------------------------------------
+		hardware.manipulators.extendManipulator(hardware.gamePad1.getRawButtonPressed(constants.gpBtnA));
+		hardware.manipulators.stowManipulator(hardware.gamePad1.getRawButtonPressed(constants.gpBtnB));	
 
 		
 

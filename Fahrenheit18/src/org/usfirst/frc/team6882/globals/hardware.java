@@ -50,15 +50,9 @@ public class hardware {
 	public static Spark rightSpark1 = new Spark(1);
 	public static Spark rightSpark2 = new Spark(0);
 	
-	public static Spark intakeSparkL = new Spark(4);
-	public static Spark intakeSparkR = new Spark(5);
+	public static Spark intakeSparkLeft = new Spark(4);
+	public static Spark intakeSparkRight = new Spark(5);
 	
-	// ------------------------------------
-	// Encoders
-	// ------------------------------------
-	public static Encoder leftDriveEncoder = new Encoder(6, 7);
-	public static Encoder rightDriveEncoder = new Encoder(8, 9);
-
 	// ====================================
 	// CAN classes
 	// ====================================
@@ -78,11 +72,25 @@ public class hardware {
 	
 	public static DigitalInput leftPosition = new DigitalInput(1);
 	public static DigitalInput rightPosition = new DigitalInput(2);
+	
+	// ------------------------------------
+	// Encoders
+	// ------------------------------------
+	public static Encoder leftDriveEncoder = new Encoder(4, 3);
+	public static Encoder rightDriveEncoder = new Encoder(6, 5);
+	
+	// ------------------------------------
+	// Limit Switches
+	// ------------------------------------
+	public static DigitalInput liftMax = new DigitalInput(7);
+	public static DigitalInput liftMin = new DigitalInput(8);
+	public static DigitalInput cubeIn = new DigitalInput(9);
+	
 
 
 	// **********************************************************
 	// SOLENOID I/O CLASSES
-	// **********************************************************
+	// ******** **************************************************
 	// ====================================
 	// Compressor class - runs the compressor
 	// ====================================
@@ -135,7 +143,7 @@ public class hardware {
 	// **********************************************************
 	// DRIVE AND MANIPULATOR CLASSES
 	// **********************************************************
-	public static Manipulators manipulators = new Manipulators(liftTalon, flipper1, flipper2);
+	public static Manipulators manipulators = new Manipulators(liftTalon, flipper1, flipper2, intakeSparkLeft, intakeSparkRight);
 	public static Transmission driveBase = new Transmission(leftSpark1, leftSpark2, rightSpark1, rightSpark2, leftDriveEncoder, rightDriveEncoder);
 
 } // end class

@@ -70,6 +70,7 @@ package org.usfirst.frc.team6882.robot;
 
 import org.usfirst.frc.team6882.globals.constants;
 import org.usfirst.frc.team6882.globals.hardware;
+import org.usfirst.frc.team6882.robot.Autonomous.State;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
@@ -218,12 +219,13 @@ public class Robot extends IterativeRobot {
 		hardware.leftSpark1.setInverted(true);
 		hardware.leftSpark2.setInverted(true);
 		
-		// Invert motor controller for elevator so positive is up
-		hardware.liftTalon.setInverted(false);
+		// Invert motor controller for one side of intake
+		hardware.intakeSparkRight.setInverted(true);
 		
 		// Set drive encoders distance per pulse
 		hardware.leftDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
 		hardware.rightDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
+		
 		
 
 		// User code goes above here
@@ -305,11 +307,20 @@ public class Robot extends IterativeRobot {
 		// =========================================================
 		// User code goes below here
 		// =========================================================
-		boolean leftPos = hardware.leftPosition.get();
-		boolean rightPos = hardware.rightPosition.get();
+//		boolean leftPos = hardware.leftPosition.get();
+//		boolean rightPos = hardware.rightPosition.get();
+//		
+//		System.out.println("Left position = " + !leftPos);
+//		System.out.println("Right position = " + !rightPos);
 		
-		System.out.println("Left position = " + !leftPos);
-		System.out.println("Right position = " + !rightPos);
+		//testing encoders
+		//hardware.leftDriveEncoder.reset();
+		//hardware.rightDriveEncoder.reset();
+		
+		//System.out.println("Encoders reset. Left: " + hardware.leftDriveEncoder.getDistance() + " Right: " + hardware.rightDriveEncoder.getDistance());
+		
+		//testing auto under here
+		
 		// =========================================================
 		// User code goes above here
 		// =========================================================
@@ -329,7 +340,80 @@ public class Robot extends IterativeRobot {
 		// =========================================================
 		// User code goes below here
 		// =========================================================
-
+		
+		//Test Switches
+		if(hardware.leftStick.getRawButtonPressed(7))
+		{
+			System.out.println("disable = "  + hardware.disableAutoSwitch.get());
+			System.out.println("Left = " + hardware.leftPosition.get());
+			System.out.println("Right = " + hardware.rightPosition.get());
+			System.out.println("liftMax = " + hardware.liftMax.get());
+			System.out.println("liftMin = " + hardware.liftMin.get());
+			System.out.println("cubeIn = " + hardware.cubeIn.get());
+		}
+		
+		
+		//Test drive by inches and turn by degrees
+		
+//		if (hardware.driveBase.driveByInches(-0.3, 168))
+//		{
+//			hardware.rightDriveEncoder.reset();
+//			hardware.driveBase.stop();
+//		}
+//		if(hardware.leftStick.getRawButtonPressed(7))
+//		{
+//			tempLeft = hardware.leftDriveEncoder.get();
+//			tempRight = hardware.rightDriveEncoder.get();
+//		
+//			temp++;
+//			System.out.println("Temp = " + temp + " Left = " + tempLeft + " Right = " + tempRight);
+//		}
+		
+//		if(!d)
+//		{
+//			if(hardware.driveBase.driveByInches(-0.5, 30))
+//			{
+//				System.out.println("30 inches done.");
+//				d = true;
+//			}
+//		}
+//		
+//		if(!d)
+//		{
+//			if(hardware.driveBase.turnDegrees(90, false, 0.5))
+//			{
+//				System.out.println("90 degress done.");
+//				d = true;
+//			}
+//		}		
+		
+		//Test button outputs
+//		boolean btn1 = hardware.gamePad1.getRawButtonPressed(1);
+//		boolean btn2 = hardware.gamePad1.getRawButtonPressed(2);
+//		boolean btn3 = hardware.gamePad1.getRawButtonPressed(3);
+//		boolean btn4 = hardware.gamePad1.getRawButtonPressed(4);
+//		boolean btn5 = hardware.gamePad1.getRawButtonPressed(5);
+//		boolean btn6 = hardware.gamePad1.getRawButtonPressed(6);
+//		boolean btn7 = hardware.gamePad1.getRawButtonPressed(7);
+//		boolean btn8 = hardware.gamePad1.getRawButtonPressed(8);
+//		boolean btn9 = hardware.gamePad1.getRawButtonPressed(9);
+//		boolean btn10 = hardware.gamePad1.getRawButtonPressed(10);
+//		boolean btn11 = hardware.gamePad1.getRawButtonPressed(11);
+//		boolean btn12 = hardware.gamePad1.getRawButtonPressed(12);
+//		boolean btn13 = hardware.gamePad1.getRawButtonPressed(13);
+//		boolean btn14 = hardware.gamePad1.getRawButtonPressed(14);
+//		boolean btn15 = hardware.gamePad1.getRawButtonPressed(15);
+//		boolean btn16 = hardware.gamePad1.getRawButtonPressed(16);
+//		
+//		if(btn1 || btn2 || btn3 || btn4 || btn5 || btn6 || btn7 || btn8 || btn9 || btn10 || btn11 || btn12 || btn13 || btn14 || btn15 || btn16)
+//		{
+//			System.out.println("Btn 1: " + btn1 + " Btn 2: " + btn2 + " Btn 3: " + btn3 + " Btn 4: " + btn4);
+//			System.out.println("Btn 5: " + btn5 + " Btn 6: " + btn6 + " Btn 7: " + btn7 + " Btn 8: " + btn8);
+//			System.out.println("Btn 9: " + btn9 + " Btn 10: " + btn10 + " Btn 11: " + btn11 + " Btn 12: " + btn12);
+//			System.out.println("Btn 13: " + btn13 + " Btn 14: " + btn14 + " Btn 15: " + btn15 + " Btn 16: " + btn16);
+//		}
+		
+		
 		// =========================================================
 		// User code goes above here
 		// =========================================================
@@ -337,7 +421,11 @@ public class Robot extends IterativeRobot {
 	} // end testPeriodic
 
 	// ==========================================
-	// TUNEABLES
+	// GLOBAL TEST VARIABLES
 	// ==========================================
+	int temp = 0;
+	double tempLeft = 0;
+	double tempRight = 0;
+	boolean d = false;
 
 } // end class

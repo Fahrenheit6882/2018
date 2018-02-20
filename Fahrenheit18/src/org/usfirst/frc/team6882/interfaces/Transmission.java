@@ -85,14 +85,15 @@ public class Transmission {
 			rightEnc.reset();
 		}
 		
-		//drive left side if it has not gone far enough 
-		if(leftEnc.getDistance() < inches) {
-			left = speed;
-		}
+//		//drive left side if it has not gone far enough 
+//		if(leftEnc.getDistance() < inches) {
+//			left = speed;
+//		}
 		
 		//drive right side if it has not gone far enough
 		if(rightEnc.getDistance() < inches) {
 			right = speed;
+			left = speed;
 		}
 		
 		//call to make motors move 
@@ -133,33 +134,39 @@ public class Transmission {
 		// if turning right, left wheel goes forward and right wheel goes backwards
 		if (rightTurn){
 			//Left forward
-			if(leftEnc.getDistance() < inchesToTravel) {
-				left = speed;
-			}
+//			if(leftEnc.getDistance() < inchesToTravel) {
+//				left = speed;
+//			}
 			
 			//Right backward
 			if(rightEnc.getDistance() > -(inchesToTravel)) {
-				right = -speed;
+				right = speed;
+				left = -speed;
 			}
 		}
 		// turning left, so left wheel goes backwards and right wheel goes forwards
 		else {
 			//Left backward
-			if(leftEnc.getDistance() > -(inchesToTravel)) {
-				left = -speed;
-			}
+//			if(leftEnc.getDistance() > -(inchesToTravel)) {
+//				left = -speed;
+//			}
 			
 			//Right forward
 			if(rightEnc.getDistance() < inchesToTravel) {
-				right = speed;
-			}
-			// Move the wheels
-			this.drive(left, right);
-			//If turned far enough, prepare for next call via encReset
-			if(left == 0 && right == 0) {
-				encReset = true;
+				right = -speed;
+				left = speed;
 			}
 		}
+		
+
+		// Move the wheels
+		this.drive(left, right);
+		
+		//If turned far enough, prepare for next call via encReset
+		if(left == 0 && right == 0) {
+			encReset = true;
+		}
+		
 		// return state of resetEnc - true if turned far enough; false if turned not far enough
 		return(encReset);
 	}

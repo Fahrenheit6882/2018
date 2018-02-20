@@ -35,16 +35,16 @@ public class constants {
 	public static final int gpRightY = 5;
 
 	// Game Pad Button Indexes
-	public static final int gpBtnA = 0;
-	public static final int gpBtnB = 1;
-	public static final int gpBtnX = 2;
-	public static final int gpBtnY = 3;
-	public static final int gpBtnLB = 4;
-	public static final int gpBtnRB = 5;
-	public static final int gpBtnBack = 6;
-	public static final int gpBtnStart = 7;
-	public static final int gpBtnLStick = 8;
-	public static final int gpBtnRStick = 9;
+	public static final int gpBtnA = 1;
+	public static final int gpBtnB = 2;
+	public static final int gpBtnX = 3;
+	public static final int gpBtnY = 4;
+	public static final int gpBtnLB = 5;
+	public static final int gpBtnRB = 6;
+	public static final int gpBtnBack = 7;
+	public static final int gpBtnStart = 8;
+	public static final int gpBtnLStick = 9;
+	public static final int gpBtnRStick = 10;
 
 	// ---------------------------------------
 	// Hardware Tunables
@@ -53,19 +53,16 @@ public class constants {
 	// Speed Factors
 	public static double fastSpeedFactor = 0.6;
 	public static double slowSpeedFactor = 0.2;
-	public static double liftSpeedFactor = 0.3;
+	public static double liftSpeedFactor = 0.7;
 
 	// Dead Zones
 	public static double joystickDeadZone = 0.2;
-	public static double gamepadDeadZone = 0.1;
-	
-	//Encoder Constants
-	public static double encPulsePerRot = 1440;
-	
+	public static double gamepadDeadZone = 0.05;
+		
 	//Forward Motion Calculations
-	public static double wheelRadius = 3; //inches
-	public static double wheelCirc = 2 * Math.PI * wheelRadius;
-	public static double inchesPerPulse = wheelCirc / encPulsePerRot;
+	public static double distanceMeasured = 30; //inches
+	public static double pulsesCounted = 570; //pulses
+	public static double inchesPerPulse = distanceMeasured / pulsesCounted;
 	
 	//Turn calculations
 	public static double turnRadius = 13.75;//inches
