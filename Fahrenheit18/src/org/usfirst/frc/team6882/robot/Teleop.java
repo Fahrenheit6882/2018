@@ -45,6 +45,7 @@ public class Teleop {
 	static double speedLeft = 0.0;
 	static double speedRight = 0.0;
 	static double speedLift = 0.0;
+	static boolean climb = false;
 
 	/**
 	 * User Initialization code for teleop mode should go here. Will be called once
@@ -76,6 +77,28 @@ public class Teleop {
 		// move the lift
 		hardware.manipulators.moveLift(speedLift);
 		
+		//triggering climb to a start button
+		if(hardware.gamePad1.getRawButtonPressed(constants.gpBtnStart))
+		{
+			climb = true;
+		}
+		
+		if(climb)
+		{
+			hardware.manipulators.climb();
+		}
+		
+		if(hardware.leftStick.getRawButtonPressed(7))
+		{
+			System.out.println("disable = "  + hardware.autoSwitch.get());
+			System.out.println("Left = " + hardware.leftPosition.get());
+			System.out.println("Right = " + hardware.rightPosition.get());
+			System.out.println("liftMax = " + hardware.liftMax.get());
+			System.out.println("liftMin = " + hardware.liftMin.get());
+			System.out.println("cubeIn = " + hardware.cubeIn.get());
+		}
+		
+		
 		//------------------------------------------------------------------
 		// INTAKE CONTROLS
 		//------------------------------------------------------------------
@@ -95,8 +118,8 @@ public class Teleop {
 		//------------------------------------------------------------------
 		// MANIPULATOR ACTUATION
 		//------------------------------------------------------------------
-		hardware.manipulators.extendManipulator(hardware.gamePad1.getRawButtonPressed(constants.gpBtnA));
-		hardware.manipulators.stowManipulator(hardware.gamePad1.getRawButtonPressed(constants.gpBtnB));	
+		hardware.manipulators.pushDownManipulator(hardware.gamePad1.getRawButtonPressed(constants.gpBtnA));
+		hardware.manipulators.pullUpManipulator(hardware.gamePad1.getRawButtonPressed(constants.gpBtnB));	
 
 		
 

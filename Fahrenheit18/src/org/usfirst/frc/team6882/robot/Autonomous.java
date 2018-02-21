@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6882.robot;
 
 import org.usfirst.frc.team6882.globals.hardware;
+import org.omg.PortableServer.POAManagerPackage.State;
 import org.usfirst.frc.team6882.globals.constants;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -20,8 +21,9 @@ public class Autonomous {
 	static char ourSwitch;
 	static char Scale;
 	static char startPosition; 
-	// tempTick variable is being used in lieu of the encoders ticks for now
-	static int tempTick;
+
+	// how far to travel in simple auto
+	static double travelDistance = 0;
 
 	/**
 	 * User Initialization code for autonomous mode should go here. Will run once
@@ -30,23 +32,38 @@ public class Autonomous {
 	 */
 	public static void init() {
 		// initialize timer
-		autoTimer = new Timer();
+//		autoTimer = new Timer();
 
 		// read game data
 		ourSwitch = ' ';
 		Scale = ' ';
 		
 		//TODO read the switch
-		// setting starting position to L for test
-		//startPosition = 'L';
-		tempTick = 0;
+		
+		if(!hardware.leftPosition.get())
+		{
+			startPosition = 'L';
+		}
+		else if (!hardware.rightPosition.get())
+		{
+			startPosition = 'R';
+		}
+		else
+		{
+			startPosition = 'C';
+		}
+		
 	} // end Init
 
 	public static enum State {
-		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, AUTOLINEFORWARD, RESETLIFT, DROPBLOCK, REVERSE, REVERSEDRIVE, EXCHANGEGIVE, AFTERREVERSETURN, APPROACHLASTEXCHANGETURN, RESET, BLOCK, STOP, FINISH
+		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, AUTOLINEFORWARD, PAUSE, RESETLIFT, DROPBLOCK, REVERSE, REVERSEDRIVE, EXCHANGEGIVE, AFTERREVERSETURN, APPROACHLASTEXCHANGETURN, RESET, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
+	
+	private static boolean lifted = false;
+	private static int cnt = 0;
+	private static int maxCnt = 10;
 
 	/**
 	 * User Periodic code for autonomous mode should go here. Will be called
@@ -55,8 +72,12 @@ public class Autonomous {
 	public static void periodic() {
 		// if Autonomous is not disabled (i.e. Autonomous is enabled) do some things
 		//TODO Put physical switch read back into the if statement
-		//if (true) {
-			System.out.println(autoState.toString());
+		if (hardware.autoSwitch.get()) {
+			if(autoState != State.FINISH)
+			{
+				System.out.println(autoState.toString());
+			}
+			
 			switch (autoState) {
 				case START:
 					hardware.driveBase.stop();
@@ -65,46 +86,129 @@ public class Autonomous {
 					if(rawData != "") {
 						ourSwitch = rawData.charAt(0);
 						Scale = rawData.charAt(1);
-						
-						if(startPosition == 'R' || startPosition == 'L') {
-							autoState = State.AUTOLINEFORWARD;
-						}
-						if(startPosition == 'C') {
-							autoState = State.CENTERAPPROACHSWITCH;
-						}
 					}
+					
+					if(cnt < maxCnt)
+					{
+						//intake cube
+						hardware.manipulators.intake();
+						hardware.manipulators.moveLift(0);
+						cnt++;
+					}
+					else
+					{
+						autoState = State.AUTOLINEFORWARD;
+//						autoState = State.FINISH;
+						cnt = 0;
+					}
+
+					if(!lifted && cnt == 2)
+					{
+						//putting manipulator in upright position
+						hardware.manipulators.pullUpManipulator(true);
+						lifted = true;
+					}
+					
 					break;
 				
 				case AUTOLINEFORWARD:
-					//drive forward 168 inches before changing states
-					if (hardware.driveBase.driveByInches(0.6, 168))
+					//turn off intake first
+					hardware.manipulators.intake();
+					
+					//if L or R, drive forward 168 inches before changing states
+					switch(startPosition)
+					{
+						case 'r':
+						case 'R':
+						case 'l':
+						case 'L':
+							if (hardware.driveBase.driveByInches(-0.6, (168 - constants.stoppingDistance)))
+							{
+								hardware.driveBase.stop();
+								
+								cnt = 0;
+								
+								// TODO add logic for when to turn towards the switch
+								autoState = State.PAUSE;
+//								autoState = State.FINISH;
+							}	
+							break;
+						case 'c':
+						case 'C':
+							if (hardware.driveBase.driveByInches(-0.6, 30))
+							{
+								hardware.driveBase.stop();
+								
+								autoState = State.FINISH;
+							}
+							break;
+						
+					}
+					
+					break;
+				case PAUSE:
+				{
+					if (cnt < 10)
 					{
 						hardware.driveBase.stop();
-						
-						// TODO add logic for when to turn towards the switch
+						cnt++;
+					}
+					else
+					{
+//						hardware.leftDriveEncoder.reset();
+						hardware.rightDriveEncoder.reset();
 						autoState = State.FIELDSWITCHTURN;
-					}	
-					break;
-				
+//						autoState = State.FINISH;
+						cnt = 0;
+					}
+				}
 				case FIELDSWITCHTURN:
-					// TODO turn 90 degrees towards switch
-					hardware.driveBase.turnDegrees(90, true, 0.6);
-					
+					switch (startPosition)
+					{
+						case 'r':
+						case 'R':
+							if(hardware.driveBase.turnDegrees(65, false, 0.5))
+							{
+//								autoState = State.FINISH;
+								autoState = State.LIFTSWITCH;
+							}
+							break;
+						case 'l':
+						case 'L':
+							if(hardware.driveBase.turnDegrees(95, true, 0.5))
+							{
+								autoState = State.FINISH;
+								autoState = State.LIFTSWITCH;
+							}
+							break;
+					}
 					break; 
 					
 				case LIFTSWITCH:
 					//TODO LIFTSWITCH need to write code for lifting block
 					
-					hardware.liftTalon.set(1);
+					hardware.manipulators.moveLift(-1.0);
 					//change tempTick to the ticks on the encoders 19 inches is the goal.
-					if(hardware.driveBase.driveByInches(0.2, 39.25)) {
-						hardware.liftTalon.set(0);
+					if(hardware.driveBase.driveByInches(-0.3, 15 - constants.stoppingDistance)) {
+						hardware.manipulators.moveLift(0);
 						autoState = State.DROPBLOCK;
+//						autoState = State.FINISH;
 					}
 					break;
 					
 				case DROPBLOCK:
 					// TODO code DROPBLOCK
+					if(cnt < maxCnt)
+					{
+						hardware.manipulators.outtake();
+						cnt++;
+					}
+					else
+					{
+						cnt = 0;
+						hardware.manipulators.stoptake();
+						autoState = State.FINISH;
+					}
 					break;
 					
 				case RESETLIFT:
@@ -129,27 +233,65 @@ public class Autonomous {
 					break;
 
 				case REVERSEDRIVE:
-					tempTick++;
 					hardware.driveBase.drive (-1, -1);
-					//Encoder will also go here
-				//set condition gone far enough, which is -168 in.
-					if (tempTick > 100)
-						//I don not know if the encoder can count backwards, this is if it cannot cout backwards
-					{
-						hardware.driveBase.stop();
-						autoState = State.EXCHANGEGIVE; 
-					}
+					
 					//End curly bracket of condition here
 					//The state: EXCHANGEGIVE will make sure that the arm is lowered and insert the cube into the exchange
 					break;
+					
 				case FINISH:
 					hardware.driveBase.stop();
+					hardware.manipulators.moveLift(0);
 					break;
 	
 				default:
 					break;
 			}
 		}
+		else
+		{
+			switch (autoState) 
+			{
+				case START:
+					if(!lifted)
+					{
+						//putting manipulator in upright position
+						hardware.manipulators.pullUpManipulator(true);
+						lifted = true;
+						if (startPosition == 'C' || startPosition == 'c')
+						{
+							travelDistance = 95;
+						}
+						else
+						{
+							travelDistance = 168;
+						}
+					}
+					
+					break;
+				
+				case AUTOLINEFORWARD:
+					if (hardware.driveBase.driveByInches(-0.6, (travelDistance - constants.stoppingDistance)))
+						{
+							hardware.driveBase.stop();
+							
+							cnt = 0;
+							
+							// TODO add logic for when to turn towards the switch
+							autoState = State.FINISH;
+						}						
+					break;
+					
+				case FINISH:
+					hardware.driveBase.stop();
+					hardware.manipulators.moveLift(0);
+					break;
+	
+				default:
+					break;				
+				
+			}
+		}
 	}
-//}
+}
 // end class

@@ -35,12 +35,90 @@ public class Manipulators {
 
 	/**
 	 * Move the elevator (and everything else attached to it) according to the speed
-	 * @param speedlift - positive = upward movement; negative = downward movement
+	 * @param speedLift - positive = upward movement; negative = downward movement
 	 */
-	public void moveLift(double speedlift) {
-		// TODO - add logic to prevent driving the motor beyond full extension or full lowered
-		liftMotor.set(speedlift * constants.liftSpeedFactor);
+	public void moveLift(double speedLift) {
+		// if we are at the bottom of the elevator (liftMin = false)
+		//		if rising, use speedLift
+		//		if lowering, holdLift
+		if(!hardware.liftMin.get())
+		{
+			if(speedLift < 0)
+			{
+				liftMotor.set(speedLift * constants.liftSpeedFactor);
+			}
+			else
+			{
+				holdLift();
+			}
+		}
+		
+		// if we are at the top of the elevator (liftMax = false) then holdLift
+		//		if lowering, use speedLift
+		//		if rising, holdLift
+		else if(!hardware.liftMax.get())
+		{
+			if(speedLift > 0)
+			{
+				liftMotor.set(speedLift * constants.liftSpeedFactor);
+			}
+			else
+			{
+				holdLift();
+			}
+		}
+		
+		//if not at top or bottom 
+		//		if not moving hold lift 
+		//		else speedlift
+		else
+		{
+			if(speedLift == 0)
+			{
+				holdLift();
+			}
+			else 
+			{
+				liftMotor.set(speedLift * constants.liftSpeedFactor);
+			}
+		}
 	}
+	
+	/**
+	 * holds the lift in place against gravity
+	 */
+	private void holdLift() {
+		//TODO - add logic to prevent elevator from falling when not actively rising and not at bottom of lift
+		// 		or to stop moving at bottom of lift
+		
+		// if at bottom of elevator (liftMin = false) then set 0
+		// else set gravityCounter
+		if(!hardware.liftMin.get()) 
+		{
+			hardware.liftTalon.set(0);
+		}
+		else 
+		{
+			hardware.liftTalon.set(constants.gravityCounter);
+		}
+		
+	}
+	
+	/**
+	 * automates climbing 
+	 */
+	public void climb()
+	{
+		if(!hardware.liftMin.get())
+		{
+			hardware.liftTalon.set(constants.climbHold);
+		}
+		else
+		{
+			hardware.liftTalon.set(constants.climbActive);
+		}
+	}
+	
 	
 	/**
 	 * Suck the cube in
@@ -73,7 +151,7 @@ public class Manipulators {
 	/**
 	 * Push the pneumatic pistons out (forward) to PUSH the manipulator down
 	 */
-	public void stowManipulator(boolean button) {
+	public void pullUpManipulator(boolean button) {
 		if(button && !pushBtnState)
 		{
 			flipper1.set(DoubleSolenoid.Value.kForward);
@@ -86,7 +164,7 @@ public class Manipulators {
 	/**
 	 * Pull the pneumatic pistons back (reverse) to PULL to manipulator up into the working position
 	 */
-	public void extendManipulator(boolean button) {
+	public void pushDownManipulator(boolean button) {
 		if(button && !pullBtnState)
 		{
 			flipper1.set(DoubleSolenoid.Value.kReverse);

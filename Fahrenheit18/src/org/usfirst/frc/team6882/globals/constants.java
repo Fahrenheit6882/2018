@@ -54,6 +54,11 @@ public class constants {
 	public static double fastSpeedFactor = 0.6;
 	public static double slowSpeedFactor = 0.2;
 	public static double liftSpeedFactor = 0.7;
+	
+	// Gravity Adjustment for Lift
+	public static double gravityCounter = -0.125;
+	public static double climbHold = -0.2;
+	public static double climbActive = 0.7;
 
 	// Dead Zones
 	public static double joystickDeadZone = 0.2;
@@ -68,5 +73,8 @@ public class constants {
 	public static double turnRadius = 13.75;//inches
 	public static double turnCirc = Math.PI * 2 * turnRadius;
 	public static double inchesPerDegree = (turnCirc/360);
+	
+	//Autonomous variables
+	public static double stoppingDistance = 6.5; //inches at 0.6 speed
 	
 } // end class

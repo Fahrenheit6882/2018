@@ -344,7 +344,7 @@ public class Robot extends IterativeRobot {
 		//Test Switches
 		if(hardware.leftStick.getRawButtonPressed(7))
 		{
-			System.out.println("disable = "  + hardware.disableAutoSwitch.get());
+			System.out.println("disable = "  + hardware.autoSwitch.get());
 			System.out.println("Left = " + hardware.leftPosition.get());
 			System.out.println("Right = " + hardware.rightPosition.get());
 			System.out.println("liftMax = " + hardware.liftMax.get());
@@ -360,14 +360,15 @@ public class Robot extends IterativeRobot {
 //			hardware.rightDriveEncoder.reset();
 //			hardware.driveBase.stop();
 //		}
-//		if(hardware.leftStick.getRawButtonPressed(7))
-//		{
-//			tempLeft = hardware.leftDriveEncoder.get();
-//			tempRight = hardware.rightDriveEncoder.get();
-//		
-//			temp++;
-//			System.out.println("Temp = " + temp + " Left = " + tempLeft + " Right = " + tempRight);
-//		}
+		if(hardware.leftStick.getRawButtonPressed(6))
+		{
+			tempLeft = hardware.leftDriveEncoder.get();
+			tempRight = hardware.rightDriveEncoder.get();
+		
+			temp++;
+			System.out.println("Temp = " + temp + " Left = " + tempLeft + " Right = " + tempRight);
+		}
+		
 		
 //		if(!d)
 //		{
@@ -378,14 +379,14 @@ public class Robot extends IterativeRobot {
 //			}
 //		}
 //		
-//		if(!d)
-//		{
-//			if(hardware.driveBase.turnDegrees(90, false, 0.5))
-//			{
-//				System.out.println("90 degress done.");
-//				d = true;
-//			}
-//		}		
+		if(!d)
+		{
+			if(hardware.driveBase.turnDegrees(90, true, 0.5))
+			{
+				System.out.println("90 degress done.");
+				d = true;
+			}
+		}		
 		
 		//Test button outputs
 //		boolean btn1 = hardware.gamePad1.getRawButtonPressed(1);

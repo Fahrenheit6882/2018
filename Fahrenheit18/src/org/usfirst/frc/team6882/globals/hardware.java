@@ -68,7 +68,7 @@ public class hardware {
 	// ------------------------------------
 	// Single and double throw switches
 	// ------------------------------------
-	public static DigitalInput disableAutoSwitch = new DigitalInput(0);
+	public static DigitalInput autoSwitch = new DigitalInput(7);
 	
 	public static DigitalInput leftPosition = new DigitalInput(1);
 	public static DigitalInput rightPosition = new DigitalInput(2);
@@ -82,7 +82,7 @@ public class hardware {
 	// ------------------------------------
 	// Limit Switches
 	// ------------------------------------
-	public static DigitalInput liftMax = new DigitalInput(7);
+	public static DigitalInput liftMax = new DigitalInput(0);
 	public static DigitalInput liftMin = new DigitalInput(8);
 	public static DigitalInput cubeIn = new DigitalInput(9);
 	
@@ -107,8 +107,8 @@ public class hardware {
 	// Double Solenoids
 	// ------------------------------------
 	// Forward = extended = down or stowed; Backward = retracted = up in working position
-	public static DoubleSolenoid flipper1 = new DoubleSolenoid(0,1);
-	public static DoubleSolenoid flipper2 = new DoubleSolenoid(2,3);
+	public static DoubleSolenoid flipper1 = new DoubleSolenoid(1, 0);
+	public static DoubleSolenoid flipper2 = new DoubleSolenoid(3, 2);
 
 	
 	
