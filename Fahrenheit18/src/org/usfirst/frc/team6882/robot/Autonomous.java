@@ -56,7 +56,7 @@ public class Autonomous {
 	} // end Init
 
 	public static enum State {
-		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, AUTOLINEFORWARD, PAUSE, RESETLIFT, DROPBLOCK, REVERSE, REVERSEDRIVE, EXCHANGEGIVE, AFTERREVERSETURN, APPROACHLASTEXCHANGETURN, RESET, BLOCK, STOP, FINISH
+		START, LIFTSWITCH, CENTERAPPROACHSWITCH, FIELDSWITCHTURN, FORWARD, PAUSE, RESETLIFT, DROPBLOCK, REVERSE, REVERSEDRIVE, EXCHANGEGIVE, AFTERREVERSETURN, APPROACHLASTEXCHANGETURN, RESET, BLOCK, STOP, FINISH
 	}
 
 	public static State autoState = State.START;
@@ -97,7 +97,7 @@ public class Autonomous {
 					}
 					else
 					{
-						autoState = State.AUTOLINEFORWARD;
+						autoState = State.FORWARD;
 //						autoState = State.FINISH;
 						cnt = 0;
 					}
@@ -111,7 +111,7 @@ public class Autonomous {
 					
 					break;
 				
-				case AUTOLINEFORWARD:
+				case FORWARD:
 					//turn off intake first
 					hardware.manipulators.intake();
 					
@@ -270,7 +270,7 @@ public class Autonomous {
 					
 					break;
 				
-				case AUTOLINEFORWARD:
+				case FORWARD:
 					if (hardware.driveBase.driveByInches(-0.6, (travelDistance - constants.stoppingDistance)))
 						{
 							hardware.driveBase.stop();
