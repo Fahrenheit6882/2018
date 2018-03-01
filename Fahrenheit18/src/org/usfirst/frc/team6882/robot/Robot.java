@@ -70,7 +70,6 @@ package org.usfirst.frc.team6882.robot;
 
 import org.usfirst.frc.team6882.globals.constants;
 import org.usfirst.frc.team6882.globals.hardware;
-import org.usfirst.frc.team6882.robot.Autonomous.State;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 
