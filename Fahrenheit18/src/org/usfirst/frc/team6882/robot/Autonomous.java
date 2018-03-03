@@ -182,9 +182,41 @@ public class Autonomous {
 					
 					break;
 				case SWITCH:
-					
+					if(hardware.driveBase.driveByInches(-0.3, arg))
+					{
+						hardware.driveBase.stop();
+						hardware.manipulators.outtake();
+						//might need to change whether this is true or false
+						if(hardware.cubeIn.get())
+						{
+							hardware.manipulators.stoptake();
+							currStep++;
+						}
+					}
+					else
+					{
+						hardware.manipulators.moveLift(-0.7);
+					}
 					break;
 				case RESET:
+					if(hardware.driveBase.driveByInches(0.3, arg))
+					{
+						hardware.driveBase.stop();
+						hardware.manipulators.moveLift(0.7);
+						if(!hardware.liftMin.get())
+						{
+							hardware.manipulators.moveLift(0);
+							currStep++;
+						}
+					}
+					
+					if(!hardware.liftMin.get())
+					{
+					}
+					else
+					{
+						hardware.manipulators.moveLift(-0.7);
+					}
 					
 					break;
 				case FINISH:
