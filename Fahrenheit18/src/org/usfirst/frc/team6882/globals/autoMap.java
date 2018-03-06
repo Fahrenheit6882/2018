@@ -71,14 +71,31 @@ public class autoMap {
 		autoArgs[5][8] = 15.0;
 		autoPaths[5][9] = State.FINISH;
 		
+		autoPaths[6][0] = State.START;
+		autoPaths[6][1] = State.FORWARD;
+		autoArgs[6][1] = 168.0;
+		autoPaths[6][2] = State.LEFT;
+		autoArgs[6][2] = 90.0;
+		autoPaths[6][3] = State.SWITCH;
+		autoArgs[6][3] = 15.0;
+		autoPaths[6][4] = State.FINISH;
+		
 		autoPaths[7][0] = State.START;
 		autoPaths[7][1] = State.FORWARD;
-		autoArgs[7][1] = 168.0;
+		autoArgs[7][1] = 185.0;
 		autoPaths[7][2] = State.LEFT;
 		autoArgs[7][2] = 90.0;
-		autoPaths[7][3] = State.SWITCH;
-		autoArgs[7][3] = 15.0;
-		autoPaths[7][4] = State.FINISH;
+		autoPaths[7][3] = State.FORWARD;
+		autoArgs[7][3] = 166.0;
+		autoPaths[7][4] = State.LEFT;
+		autoArgs[7][4] = 90.0;
+		autoPaths[7][5] = State.FORWARD;
+		autoArgs[7][5] = 17.0;
+		autoPaths[7][6] = State.LEFT;
+		autoArgs[7][6] = 90.0;
+		autoPaths[7][7] = State.SWITCH;
+		autoArgs[7][7] = 15.0;
+		autoPaths[7][8] = State.FINISH;
 		
 		autoPaths[8][0] = State.START;
 		autoPaths[8][1] = State.FORWARD;

@@ -21,6 +21,7 @@ public class Autonomous {
 	static int currStep = -1;
 	static double arg;
 	static boolean ready = false;
+	static boolean back = false;
 
 	/**
 	 * User Initialization code for autonomous mode should go here. Will run once
@@ -140,6 +141,7 @@ public class Autonomous {
 					{
 						hardware.driveBase.stop();
 						currStep++;
+						//autoState = State.Finish						// Use this to test
 					}
 					break;
 				case RIGHT:
@@ -199,23 +201,16 @@ public class Autonomous {
 					}
 					break;
 				case RESET:
-					if(hardware.driveBase.driveByInches(0.3, arg))
+					if(hardware.driveBase.driveByInches(0.3, arg) || back == true)
 					{
 						hardware.driveBase.stop();
 						hardware.manipulators.moveLift(0.7);
+						back = true;
 						if(!hardware.liftMin.get())
 						{
 							hardware.manipulators.moveLift(0);
 							currStep++;
 						}
-					}
-					
-					if(!hardware.liftMin.get())
-					{
-					}
-					else
-					{
-						hardware.manipulators.moveLift(-0.7);
 					}
 					
 					break;
