@@ -77,6 +77,12 @@ public class Teleop {
 		// move the lift
 		hardware.manipulators.moveLift(speedLift);
 		
+		//increase lift speed
+		if(hardware.gamePad1.getRawButtonPressed(constants.gpBtnBack))
+		{
+			constants.liftSpeedFactor = 1.0;
+		}
+		
 		//triggering climb to a start button
 		if(hardware.gamePad1.getRawButtonPressed(constants.gpBtnStart))
 		{
@@ -91,11 +97,12 @@ public class Teleop {
 		if(hardware.leftStick.getRawButtonPressed(7))
 		{
 			System.out.println("disable = "  + hardware.autoSwitch.get());
-			System.out.println("Left = " + hardware.leftPosition.get());
-			System.out.println("Right = " + hardware.rightPosition.get());
+//			System.out.println("Left = " + hardware.leftPosition.get());
+//			System.out.println("Right = " + hardware.rightPosition.get());
 			System.out.println("liftMax = " + hardware.liftMax.get());
 			System.out.println("liftMin = " + hardware.liftMin.get());
-			System.out.println("cubeIn = " + hardware.cubeIn.get());
+			hardware.rightDriveEncoder.reset();
+			hardware.leftDriveEncoder.reset();
 		}
 		
 		
@@ -113,6 +120,13 @@ public class Teleop {
 		else
 		{
 			hardware.manipulators.stoptake();
+		}
+		
+
+		//increase intake speed on RB
+		if(hardware.gamePad1.getRawButtonPressed(constants.gpBtnRB))
+		{
+			constants.intakeSpeedFactor = 0.7;
 		}
 		
 		//------------------------------------------------------------------

@@ -40,18 +40,18 @@ public class LegacyAutonomous {
 		
 		//TODO read the switch
 		
-		if(!hardware.leftPosition.get())
-		{
-			startPosition = 'L';
-		}
-		else if (!hardware.rightPosition.get())
-		{
-			startPosition = 'R';
-		}
-		else
-		{
-			startPosition = 'C';
-		}
+//		if(!hardware.leftPosition.get())
+//		{
+//			startPosition = 'L';
+//		}
+//		else if (!hardware.rightPosition.get())
+//		{
+//			startPosition = 'R';
+//		}
+//		else
+//		{
+//			startPosition = 'C';
+//		}
 		
 	} // end Init
 

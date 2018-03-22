@@ -77,6 +77,7 @@ public class Transmission {
 		// doubles to hold speed for left and right side
 		double left = 0.0;
 		double right = 0.0;
+		boolean stop = false;
 		
 		// only reset encoders the first time called per step
 		if(encReset) {
@@ -86,14 +87,24 @@ public class Transmission {
 		}
 		
 //		//drive left side if it has not gone far enough 
-//		if(leftEnc.getDistance() < inches) {
-//			left = speed;
-//		}
+		if(leftEnc.getDistance() < inches && !stop) {
+			left = speed;
+		}
+		else
+		{
+			left = 0.0;
+			stop = true;
+		}
 		
 		//drive right side if it has not gone far enough
-		if(rightEnc.getDistance() < inches) {
-			right = speed;
-			left = speed;
+		if(rightEnc.getDistance() < inches && !stop) {
+			right = speed * 1.005;
+//			left = speed;
+		}
+		else
+		{
+			right = 0.0;
+			stop = true;
 		}
 		
 		//call to make motors move 
@@ -122,7 +133,7 @@ public class Transmission {
 		double right = 0.0;
 		
 		// convert from degrees to inches each wheel will travel
-		double inchesToTravel = degrees * constants.inchesPerDegree;
+		double inchesToTravel = (degrees - 8.0) * constants.inchesPerDegree;
 		
 		//Reseting the encoder
 		if(encReset) {
@@ -134,27 +145,25 @@ public class Transmission {
 		// if turning right, left wheel goes forward and right wheel goes backwards
 		if (rightTurn){
 			//Left forward
-//			if(leftEnc.getDistance() < inchesToTravel) {
-//				left = speed;
-//			}
+			if(leftEnc.getDistance() < inchesToTravel) {
+				left = -speed;
+			}
 			
 			//Right backward
 			if(rightEnc.getDistance() > -(inchesToTravel)) {
 				right = speed;
-				left = -speed;
 			}
 		}
 		// turning left, so left wheel goes backwards and right wheel goes forwards
 		else {
 			//Left backward
-//			if(leftEnc.getDistance() > -(inchesToTravel)) {
-//				left = -speed;
-//			}
+			if(leftEnc.getDistance() > -(inchesToTravel)) {
+				left = speed;
+			}
 			
 			//Right forward
 			if(rightEnc.getDistance() < inchesToTravel) {
 				right = -speed;
-				left = speed;
 			}
 		}
 		

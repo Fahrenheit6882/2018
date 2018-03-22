@@ -22,6 +22,7 @@ public class Autonomous {
 	static double arg;
 	static boolean ready = false;
 	static boolean back = false;
+	static int cnt = 0;
 
 	/**
 	 * User Initialization code for autonomous mode should go here. Will run once
@@ -29,7 +30,8 @@ public class Autonomous {
 	 * periodic().
 	 */
 	public static void init() {
-		
+		hardware.leftDriveEncoder.reset();
+		hardware.rightDriveEncoder.reset();
 		
 	} // end Init
 
@@ -39,13 +41,15 @@ public class Autonomous {
 	 * periodically at a regular rate while the robot is in autonomous mode. *
 	 */
 	public static void periodic() {
+//		System.out.println(autoMode);
+		
 		//select which autonomous to run
 		if(autoMode < 0)
 		{
 			// for on/simple switch: simple = false; on = true
 			if(!hardware.autoSwitch.get())
 			{
-				if(!hardware.rightPosition.get() || !hardware.leftPosition.get())
+				if(hardware.rightStick.getZ() >= 0.5 || hardware.rightStick.getZ() <= -0.5)
 				{
 					autoMode = 0;
 				}
@@ -56,7 +60,7 @@ public class Autonomous {
 			}
 			else
 			{
-				if(!hardware.leftPosition.get()) //left side!
+				if(hardware.rightStick.getZ() <= -0.5) //left side!
 				{
 					if(hardware.leftStick.getZ() <= -0.5) //switch!
 					{
@@ -83,7 +87,7 @@ public class Autonomous {
 						}
 					}
 				}
-				else if(!hardware.rightPosition.get()) // right side
+				else if(hardware.rightStick.getZ() >= 0.5) // right side
 				{
 					if(hardware.leftStick.getZ() <= -0.5) //switch!
 					{
@@ -126,18 +130,41 @@ public class Autonomous {
 		
 			// ready to start at our first step of our desired auto
 			currStep = 0;
+			hardware.autoTimer.reset();
+			hardware.autoTimer.start();
+//			autoMode = 2;
+			System.out.println(autoMode);
 		}
 		else //ready to go through the states as laid out in autos
 		{
-		arg = autos.autoArgs[autoMode][currStep];
-			
+			arg = autos.autoArgs[autoMode][currStep];
+						
 			switch(autos.autoPaths[autoMode][currStep])
 			{
-				case START:
-					
+				case START:	
+					if(hardware.autoTimer.get() >= 3)
+					{
+						if(cnt == 16)
+						{
+							currStep++;
+							cnt = 0;
+							hardware.manipulators.stoptake();
+						}
+						else if(cnt == 5)
+						{
+							hardware.manipulators.pullUpManipulator(true);
+							cnt++;
+							hardware.manipulators.intake();
+						}
+						else
+						{
+							cnt++;
+							hardware.manipulators.intake();
+						}
+					}
 					break;
 				case FORWARD:
-					if(hardware.driveBase.driveByInches(-0.6, arg))
+					if(hardware.driveBase.driveByInches(-0.8, arg))
 					{
 						hardware.driveBase.stop();
 						currStep++;
@@ -145,7 +172,7 @@ public class Autonomous {
 					}
 					break;
 				case RIGHT:
-					if(hardware.driveBase.turnDegrees(arg, true, 0.8))
+					if(hardware.driveBase.turnDegrees(arg, true, 0.5))
 					{
 						hardware.driveBase.stop();
 						currStep++;
@@ -153,7 +180,7 @@ public class Autonomous {
 					
 					break;
 				case LEFT:
-					if(hardware.driveBase.turnDegrees(arg, false, 0.8))
+					if(hardware.driveBase.turnDegrees(arg, false, 0.5))
 					{
 						hardware.driveBase.stop();
 						currStep++;
@@ -184,20 +211,41 @@ public class Autonomous {
 					
 					break;
 				case SWITCH:
-					if(hardware.driveBase.driveByInches(-0.3, arg))
+					if(!ready && hardware.driveBase.driveByInches(-0.3, arg))
 					{
 						hardware.driveBase.stop();
-						hardware.manipulators.outtake();
+						hardware.manipulators.intake();
 						//might need to change whether this is true or false
-						if(hardware.cubeIn.get())
-						{
-							hardware.manipulators.stoptake();
-							currStep++;
-						}
+//						if(hardware.cubeIn.get())
+//						{
+//							hardware.manipulators.stoptake();
+//							currStep++;
+//						}
+//						else
+//						{
+//							hardware.manipulators.outtake();
+//						}
+						
 					}
 					else
 					{
 						hardware.manipulators.moveLift(-0.7);
+					}
+					
+					if(ready)
+					{
+						if(cnt < 16)
+						{
+							hardware.manipulators.outtake();
+							cnt++;
+						}
+						else
+						{
+							hardware.manipulators.stoptake();
+							ready = false;
+							cnt = 0;
+							currStep++;
+						}
 					}
 					break;
 				case RESET:
