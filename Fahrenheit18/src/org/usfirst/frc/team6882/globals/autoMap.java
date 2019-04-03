@@ -11,34 +11,34 @@ public class autoMap {
 	public autoMap() {
 		autoPaths[0][0] = State.START;
 		autoPaths[0][1] = State.FORWARD;
-		autoArgs[0][1] = 168.0;
+		autoArgs[0][1] = 100.0;
 		autoPaths[0][2] = State.FINISH;
 		
 		autoPaths[1][0] = State.START;
 		autoPaths[1][1] = State.FORWARD;
-		autoArgs[1][1] = 122.0;
+		autoArgs[1][1] = 100.0;
 		autoPaths[1][2] = State.FINISH;
 		
 		autoPaths[2][0] = State.START;
 		autoPaths[2][1] = State.FORWARD;
-		autoArgs[2][1] = 168.0;
+		autoArgs[2][1] = 158.0;
 		autoPaths[2][2] = State.RIGHT;
 		autoArgs[2][2] = 90.0;
 		autoPaths[2][3] = State.SWITCH;
-		autoArgs[2][3] = 15.0;
+		autoArgs[2][3] = 25.0;
 		autoPaths[2][4] = State.FINISH;
 		
 		autoPaths[3][0] = State.START;
 		autoPaths[3][1] = State.FORWARD;
-		autoArgs[3][1] = 185.0;
+		autoArgs[3][1] = 100.0;
 		autoPaths[3][2] = State.RIGHT;
 		autoArgs[3][2] = 90.0;
 		autoPaths[3][3] = State.FORWARD;
-		autoArgs[3][3] = 166.0;
+		autoArgs[3][3] = 197.0;
 		autoPaths[3][4] = State.RIGHT;
 		autoArgs[3][4] = 90.0;
 		autoPaths[3][5] = State.SWITCH;
-		autoArgs[3][5] = 15.0;
+		autoArgs[3][5] = 25.0;
 		autoPaths[3][6] = State.FINISH;
 		
 		autoPaths[4][0] = State.START;
@@ -82,15 +82,15 @@ public class autoMap {
 		
 		autoPaths[7][0] = State.START;
 		autoPaths[7][1] = State.FORWARD;
-		autoArgs[7][1] = 185.0;
+		autoArgs[7][1] = 228.0;
 		autoPaths[7][2] = State.LEFT;
 		autoArgs[7][2] = 90.0;
 		autoPaths[7][3] = State.FORWARD;
-		autoArgs[7][3] = 166.0;
+		autoArgs[7][3] = 197.0;
 		autoPaths[7][4] = State.LEFT;
 		autoArgs[7][4] = 90.0;
 		autoPaths[7][5] = State.FORWARD;
-		autoArgs[7][5] = 17.0;
+		autoArgs[7][5] = 60.0;
 		autoPaths[7][6] = State.LEFT;
 		autoArgs[7][6] = 90.0;
 		autoPaths[7][7] = State.SWITCH;

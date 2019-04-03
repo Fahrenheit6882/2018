@@ -126,8 +126,8 @@ public class Manipulators {
 	public void intake()
 	{
 		// TODO - add logic to stop intake when limit switch indicating cube held is hit
-		intakeSparkLeft.set(0.4);
-		intakeSparkRight.set(0.4);
+		intakeSparkLeft.set(constants.intakeSpeedFactor);
+		intakeSparkRight.set(constants.intakeSpeedFactor);
 	}
 	
 	/**
@@ -135,8 +135,8 @@ public class Manipulators {
 	 */
 	public void outtake()
 	{
-		intakeSparkLeft.set(-0.4);
-		intakeSparkRight.set(-0.4);
+		intakeSparkLeft.set(-constants.intakeSpeedFactor);
+		intakeSparkRight.set(-constants.intakeSpeedFactor);
 	}
 	
 	/**

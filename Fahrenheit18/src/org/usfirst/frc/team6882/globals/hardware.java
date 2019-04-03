@@ -17,6 +17,8 @@ package org.usfirst.frc.team6882.globals;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Timer;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -70,8 +72,8 @@ public class hardware {
 	// ------------------------------------
 	public static DigitalInput autoSwitch = new DigitalInput(7);
 	
-	public static DigitalInput leftPosition = new DigitalInput(1);
-	public static DigitalInput rightPosition = new DigitalInput(2);
+	//public static DigitalInput leftPosition = new DigitalInput(1);
+	//public static DigitalInput rightPosition = new DigitalInput(2);
 	
 	// ------------------------------------
 	// Encoders
@@ -84,9 +86,12 @@ public class hardware {
 	// ------------------------------------
 	public static DigitalInput liftMax = new DigitalInput(0);
 	public static DigitalInput liftMin = new DigitalInput(8);
-	public static DigitalInput cubeIn = new DigitalInput(9);
+	//public static DigitalInput cubeIn = new DigitalInput(9);
 	
-
+	//------------------------------------
+	//Timer
+	//------------------------------------
+	public static final Timer autoTimer = new Timer();
 
 	// **********************************************************
 	// SOLENOID I/O CLASSES
@@ -119,7 +124,7 @@ public class hardware {
 	// -------------------------------------
 	// Axis/USB Camera class
 	// -------------------------------------
-	public static UsbCamera POVCamera = CameraServer.getInstance().startAutomaticCapture(0);
+	public static UsbCamera POVCamera = new UsbCamera("camera", 0);
 
 
 	// **********************************************************

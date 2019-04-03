@@ -71,6 +71,7 @@ package org.usfirst.frc.team6882.robot;
 import org.usfirst.frc.team6882.globals.constants;
 import org.usfirst.frc.team6882.globals.hardware;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -222,10 +223,8 @@ public class Robot extends IterativeRobot {
 		hardware.intakeSparkRight.setInverted(true);
 		
 		// Set drive encoders distance per pulse
-		hardware.leftDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
-		hardware.rightDriveEncoder.setDistancePerPulse(constants.inchesPerPulse);
-		
-		
+		hardware.leftDriveEncoder.setDistancePerPulse(constants.inchesPerPulseLeft);
+		hardware.rightDriveEncoder.setDistancePerPulse(constants.inchesPerPulseRight);
 
 		// User code goes above here
 		// =========================================================
@@ -340,17 +339,18 @@ public class Robot extends IterativeRobot {
 		// User code goes below here
 		// =========================================================
 		
-		//Test Switches
+//		//Test Switches
 		if(hardware.leftStick.getRawButtonPressed(7))
 		{
 			System.out.println("disable = "  + hardware.autoSwitch.get());
-			System.out.println("Left = " + hardware.leftPosition.get());
-			System.out.println("Right = " + hardware.rightPosition.get());
+//			System.out.println("Left = " + hardware.leftPosition.get());
+//			System.out.println("Right = " + hardware.rightPosition.get());
 			System.out.println("liftMax = " + hardware.liftMax.get());
 			System.out.println("liftMin = " + hardware.liftMin.get());
-			System.out.println("cubeIn = " + hardware.cubeIn.get());
+			hardware.rightDriveEncoder.reset();
+			hardware.leftDriveEncoder.reset();
 		}
-		
+//		
 		
 		//Test drive by inches and turn by degrees
 		
@@ -367,26 +367,26 @@ public class Robot extends IterativeRobot {
 			temp++;
 			System.out.println("Temp = " + temp + " Left = " + tempLeft + " Right = " + tempRight);
 		}
-		
+//		
 		
 //		if(!d)
 //		{
-//			if(hardware.driveBase.driveByInches(-0.5, 30))
+//			if(hardware.driveBase.driveByInches(-0.4, 30))
 //			{
 //				System.out.println("30 inches done.");
 //				d = true;
 //			}
 //		}
 //		
-		if(!d)
-		{
-			if(hardware.driveBase.turnDegrees(90, true, 0.5))
-			{
-				System.out.println("90 degress done.");
-				d = true;
-			}
-		}		
-		
+//		if(!d)
+//		{
+//			if(hardware.driveBase.turnDegrees(90, true, 0.5))
+//			{
+//				System.out.println("90 degress done.");
+//				d = true;
+//			}
+//		}		
+//		
 		//Test button outputs
 //		boolean btn1 = hardware.gamePad1.getRawButtonPressed(1);
 //		boolean btn2 = hardware.gamePad1.getRawButtonPressed(2);

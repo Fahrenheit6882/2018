@@ -51,12 +51,21 @@ public class constants {
 	// ---------------------------------------
 
 	// Speed Factors
-	public static double fastSpeedFactor = 0.6;
-	public static double slowSpeedFactor = 0.2;
+	// changed fast  speed factor for STEM summit demo
+	public static double fastSpeedFactor = 0.7;
+	public static double slowSpeedFactor = 0.4;
 	public static double liftSpeedFactor = 0.7;
+	public static double intakeSpeedFactor = 0.4;
+	
+	//adjustment for on carpet
+	public static double rightAdjust = 1.005;
+//	public static double leftAdjust = 1.5;
+	public static double leftAdjust = 0.0;
 	
 	// Gravity Adjustment for Lift
-	public static double gravityCounter = -0.125;
+	//changing hold point to zero for demo 
+	//gravity counter was -0.125
+	public static double gravityCounter = -0.165;
 	public static double climbHold = -0.2;
 	public static double climbActive = 0.7;
 
@@ -66,8 +75,10 @@ public class constants {
 		
 	//Forward Motion Calculations
 	public static double distanceMeasured = 30; //inches
-	public static double pulsesCounted = 570; //pulses
-	public static double inchesPerPulse = distanceMeasured / pulsesCounted;
+	public static double pulsesCountedLeft = 572.0; //pulses
+	public static double pulsesCountedRight = 572.0;
+	public static double inchesPerPulseLeft = distanceMeasured / pulsesCountedLeft;
+	public static double inchesPerPulseRight = distanceMeasured / pulsesCountedRight;
 	
 	//Turn calculations
 	public static double turnRadius = 13.75;//inches
