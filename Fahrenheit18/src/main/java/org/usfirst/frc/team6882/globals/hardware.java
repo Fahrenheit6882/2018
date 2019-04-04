@@ -130,7 +130,7 @@ public class hardware {
 	// -------------------------------------
 	// Axis/USB Camera class
 	// -------------------------------------
-	public static UsbCamera POVCamera = new UsbCamera("camera", 0);
+	public static UsbCamera pOVCamera = new UsbCamera("camera", 0);
 
 
 	// **********************************************************

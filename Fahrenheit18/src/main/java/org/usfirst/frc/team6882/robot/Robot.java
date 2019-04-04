@@ -72,6 +72,8 @@ import org.usfirst.frc.team6882.globals.constants;
 import org.usfirst.frc.team6882.globals.hardware;
 
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 /**
@@ -94,6 +96,8 @@ public class Robot extends IterativeRobot {
 	// =================================================
 	// -------------------------------------------------------
 
+	//For vision processing
+	NetworkTable newTable;
 	/**
 	 * Initialization code for autonomous mode should go here. Will be called once
 	 * when the robot enters autonomous mode. *
@@ -225,6 +229,10 @@ public class Robot extends IterativeRobot {
 		// Set drive encoders distance per pulse
 		hardware.leftDriveEncoder.setDistancePerPulse(constants.inchesPerPulseLeft);
 		hardware.rightDriveEncoder.setDistancePerPulse(constants.inchesPerPulseRight);
+
+		//Starts camera feed
+		CameraServer.getInstance().addCamera(hardware.pOVCamera);
+    	CameraServer.getInstance().startAutomaticCapture(hardware.pOVCamera);
 
 		// User code goes above here
 		// =========================================================
