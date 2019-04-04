@@ -8,12 +8,13 @@ import org.usfirst.frc.team6882.globals.hardware;
 
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
-
+//TODO: Re-attach solenoids to Kelvin (2018 robot) and uncomment lines 15, 16, 31, 32, 158, 159, 171, & 172
+//Add solenoids to manipulators constructor
 
 public class Manipulators {
 	private TalonSRX liftMotor;
-	private DoubleSolenoid flipper1;
-	private DoubleSolenoid flipper2;
+	//private DoubleSolenoid flipper1;
+	//private DoubleSolenoid flipper2;
 	private Spark intakeSparkLeft;
 	private Spark intakeSparkRight;
 	
@@ -26,10 +27,10 @@ public class Manipulators {
 	 * @param f1 - DoubleSolenoid for one flipper
 	 * @param f2 - DoubleSolenoid for other flipper
 	 */
-	public Manipulators(TalonSRX liftMotor, DoubleSolenoid f1, DoubleSolenoid f2, Spark L, Spark R) {
+	public Manipulators(TalonSRX liftMotor, Spark L, Spark R) {
 		this.liftMotor = liftMotor;
-		this.flipper1 = f1;
-		this.flipper2 = f2;
+		//this.flipper1 = f1;
+		//this.flipper2 = f2;
 		this.intakeSparkLeft = L;
 		this.intakeSparkRight = R;
 	}
@@ -155,8 +156,8 @@ public class Manipulators {
 	public void pullUpManipulator(boolean button) {
 		if(button && !pushBtnState)
 		{
-			flipper1.set(DoubleSolenoid.Value.kForward);
-			flipper2.set(DoubleSolenoid.Value.kForward);
+			//flipper1.set(DoubleSolenoid.Value.kForward);
+			//flipper2.set(DoubleSolenoid.Value.kForward);
 		}
 		
 		pushBtnState = button;
@@ -168,8 +169,8 @@ public class Manipulators {
 	public void pushDownManipulator(boolean button) {
 		if(button && !pullBtnState)
 		{
-			flipper1.set(DoubleSolenoid.Value.kReverse);
-			flipper2.set(DoubleSolenoid.Value.kReverse);
+			//flipper1.set(DoubleSolenoid.Value.kReverse);
+			//flipper2.set(DoubleSolenoid.Value.kReverse);
 		}
 		
 		pullBtnState = button;
