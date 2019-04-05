@@ -13,8 +13,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class Manipulators {
 	private TalonSRX liftMotor;
-	//private DoubleSolenoid flipper1;
-	//private DoubleSolenoid flipper2;
+	private DoubleSolenoid flipper1;
+	private DoubleSolenoid flipper2;
 	private Spark intakeSparkLeft;
 	private Spark intakeSparkRight;
 	
@@ -27,10 +27,10 @@ public class Manipulators {
 	 * @param f1 - DoubleSolenoid for one flipper
 	 * @param f2 - DoubleSolenoid for other flipper
 	 */
-	public Manipulators(TalonSRX liftMotor, Spark L, Spark R) {
+	public Manipulators(TalonSRX liftMotor, Spark L, Spark R, DoubleSolenoid f1, DoubleSolenoid f2) {
 		this.liftMotor = liftMotor;
-		//this.flipper1 = f1;
-		//this.flipper2 = f2;
+		this.flipper1 = f1;
+		this.flipper2 = f2;
 		this.intakeSparkLeft = L;
 		this.intakeSparkRight = R;
 	}

@@ -118,8 +118,8 @@ public class hardware {
 	// Double Solenoids
 	// ------------------------------------
 	// Forward = extended = down or stowed; Backward = retracted = up in working position
-	//public static DoubleSolenoid flipper1 = new DoubleSolenoid(1, 0);
-	//public static DoubleSolenoid flipper2 = new DoubleSolenoid(3, 2);
+	public static DoubleSolenoid flipper1 = new DoubleSolenoid(1, 0);
+	public static DoubleSolenoid flipper2 = new DoubleSolenoid(3, 2);
 
 	
 	
@@ -155,7 +155,7 @@ public class hardware {
 	// DRIVE AND MANIPULATOR CLASSES
 	// **********************************************************
 	//Add solenoids to manipulator constructor
-	public static Manipulators manipulators = new Manipulators(liftTalon, intakeSparkLeft, intakeSparkRight);
+	public static Manipulators manipulators = new Manipulators(liftTalon, intakeSparkLeft, intakeSparkRight, flipper1, flipper2);
 	public static Transmission driveBase = new Transmission(leftSpark1, leftSpark2, rightSpark1, rightSpark2, leftDriveEncoder, rightDriveEncoder);
 
 } // end class
