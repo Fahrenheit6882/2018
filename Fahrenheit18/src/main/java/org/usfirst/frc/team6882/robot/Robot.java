@@ -70,11 +70,8 @@ package org.usfirst.frc.team6882.robot;
 
 import org.usfirst.frc.team6882.globals.constants;
 import org.usfirst.frc.team6882.globals.hardware;
-
-import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import org.usfirst.frc.team6882.interfaces.CameraProcessing;
+import edu.wpi.first.wpilibj.TimedRobot;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -90,14 +87,15 @@ import edu.wpi.first.wpilibj.IterativeRobot;
  * declares all the code necessary to extend the IterativeRobot class. These are
  * all the methods needed to run the robot during a match
  */
-public class Robot extends IterativeRobot {
+//Use TimedRobot instead of IterativeRobot for future refernce
+public class Robot extends TimedRobot {
 	// =================================================
 	// private data for the class
 	// =================================================
 	// -------------------------------------------------------
 
-	//For vision processing
-	NetworkTable newTable;
+	//Configures camera
+
 	/**
 	 * Initialization code for autonomous mode should go here. Will be called once
 	 * when the robot enters autonomous mode. *
@@ -230,16 +228,14 @@ public class Robot extends IterativeRobot {
 		hardware.leftDriveEncoder.setDistancePerPulse(constants.inchesPerPulseLeft);
 		hardware.rightDriveEncoder.setDistancePerPulse(constants.inchesPerPulseRight);
 
-		//Starts camera feed
-		CameraServer.getInstance().addCamera(hardware.pOVCamera);
-    	CameraServer.getInstance().startAutomaticCapture(hardware.pOVCamera);
-
 		// User code goes above here
 		// =========================================================
 		// ---------------------------------------
 		// done setup - tell the user we are complete
 		// setup
 		// ---------------------------------------
+		CameraProcessing.config();
+		CameraProcessing.start();
 		System.out.println("Fahrenheit-18 is started.  All hardware items created.");
 	} // end
 		// robotInit
@@ -313,11 +309,11 @@ public class Robot extends IterativeRobot {
 		// =========================================================
 		// User code goes below here
 		// =========================================================
-//		boolean leftPos = hardware.leftPosition.get();
-//		boolean rightPos = hardware.rightPosition.get();
-//		
-//		System.out.println("Left position = " + !leftPos);
-//		System.out.println("Right position = " + !rightPos);
+		//boolean leftPos = hardware.leftPosition.get();
+		//boolean rightPos = hardware.rightPosition.get();
+
+		//System.out.println("Left position = " + !leftPos);
+		//System.out.println("Right position = " + !rightPos);
 		
 		//testing encoders
 		//hardware.leftDriveEncoder.reset();
@@ -347,26 +343,24 @@ public class Robot extends IterativeRobot {
 		// User code goes below here
 		// =========================================================
 		
-//		//Test Switches
+		//Test Switches
 		if(hardware.leftStick.getRawButtonPressed(7))
 		{
 			System.out.println("disable = "  + hardware.autoSwitch.get());
-//			System.out.println("Left = " + hardware.leftPosition.get());
-//			System.out.println("Right = " + hardware.rightPosition.get());
+			//System.out.println("Left = " + hardware.leftPosition.get());
+			//System.out.println("Right = " + hardware.rightPosition.get());
 			System.out.println("liftMax = " + hardware.liftMax.get());
 			System.out.println("liftMin = " + hardware.liftMin.get());
 			hardware.rightDriveEncoder.reset();
 			hardware.leftDriveEncoder.reset();
 		}
-//		
-		
 		//Test drive by inches and turn by degrees
 		
-//		if (hardware.driveBase.driveByInches(-0.3, 168))
-//		{
-//			hardware.rightDriveEncoder.reset();
-//			hardware.driveBase.stop();
-//		}
+		/*if (hardware.driveBase.driveByInches(-0.3, 168))
+		//{
+			hardware.rightDriveEncoder.reset();
+			hardware.driveBase.stop();
+		}*/
 		if(hardware.leftStick.getRawButtonPressed(6))
 		{
 			tempLeft = hardware.leftDriveEncoder.get();
@@ -374,53 +368,51 @@ public class Robot extends IterativeRobot {
 		
 			temp++;
 			System.out.println("Temp = " + temp + " Left = " + tempLeft + " Right = " + tempRight);
+		}	
+
+		/*if(!d)
+		{
+			if(hardware.driveBase.driveByInches(-0.4, 30))
+			{
+				System.out.println("30 inches done.");
+				d = true;
+			}
 		}
-//		
 		
-//		if(!d)
-//		{
-//			if(hardware.driveBase.driveByInches(-0.4, 30))
-//			{
-//				System.out.println("30 inches done.");
-//				d = true;
-//			}
-//		}
-//		
-//		if(!d)
-//		{
-//			if(hardware.driveBase.turnDegrees(90, true, 0.5))
-//			{
-//				System.out.println("90 degress done.");
-//				d = true;
-//			}
-//		}		
-//		
+		if(!d)
+		{
+			if(hardware.driveBase.turnDegrees(90, true, 0.5))
+			{
+				System.out.println("90 degress done.");
+				d = true;
+			}
+		}		
+		
 		//Test button outputs
-//		boolean btn1 = hardware.gamePad1.getRawButtonPressed(1);
-//		boolean btn2 = hardware.gamePad1.getRawButtonPressed(2);
-//		boolean btn3 = hardware.gamePad1.getRawButtonPressed(3);
-//		boolean btn4 = hardware.gamePad1.getRawButtonPressed(4);
-//		boolean btn5 = hardware.gamePad1.getRawButtonPressed(5);
-//		boolean btn6 = hardware.gamePad1.getRawButtonPressed(6);
-//		boolean btn7 = hardware.gamePad1.getRawButtonPressed(7);
-//		boolean btn8 = hardware.gamePad1.getRawButtonPressed(8);
-//		boolean btn9 = hardware.gamePad1.getRawButtonPressed(9);
-//		boolean btn10 = hardware.gamePad1.getRawButtonPressed(10);
-//		boolean btn11 = hardware.gamePad1.getRawButtonPressed(11);
-//		boolean btn12 = hardware.gamePad1.getRawButtonPressed(12);
-//		boolean btn13 = hardware.gamePad1.getRawButtonPressed(13);
-//		boolean btn14 = hardware.gamePad1.getRawButtonPressed(14);
-//		boolean btn15 = hardware.gamePad1.getRawButtonPressed(15);
-//		boolean btn16 = hardware.gamePad1.getRawButtonPressed(16);
-//		
-//		if(btn1 || btn2 || btn3 || btn4 || btn5 || btn6 || btn7 || btn8 || btn9 || btn10 || btn11 || btn12 || btn13 || btn14 || btn15 || btn16)
-//		{
-//			System.out.println("Btn 1: " + btn1 + " Btn 2: " + btn2 + " Btn 3: " + btn3 + " Btn 4: " + btn4);
-//			System.out.println("Btn 5: " + btn5 + " Btn 6: " + btn6 + " Btn 7: " + btn7 + " Btn 8: " + btn8);
-//			System.out.println("Btn 9: " + btn9 + " Btn 10: " + btn10 + " Btn 11: " + btn11 + " Btn 12: " + btn12);
-//			System.out.println("Btn 13: " + btn13 + " Btn 14: " + btn14 + " Btn 15: " + btn15 + " Btn 16: " + btn16);
-//		}
+		boolean btn1 = hardware.gamePad1.getRawButtonPressed(1);
+		boolean btn2 = hardware.gamePad1.getRawButtonPressed(2);
+		boolean btn3 = hardware.gamePad1.getRawButtonPressed(3);
+		boolean btn4 = hardware.gamePad1.getRawButtonPressed(4);
+		boolean btn5 = hardware.gamePad1.getRawButtonPressed(5);
+		boolean btn6 = hardware.gamePad1.getRawButtonPressed(6);
+		boolean btn7 = hardware.gamePad1.getRawButtonPressed(7);
+		boolean btn8 = hardware.gamePad1.getRawButtonPressed(8);
+		boolean btn9 = hardware.gamePad1.getRawButtonPressed(9);
+		boolean btn10 = hardware.gamePad1.getRawButtonPressed(10);
+		boolean btn11 = hardware.gamePad1.getRawButtonPressed(11);
+		boolean btn12 = hardware.gamePad1.getRawButtonPressed(12);
+		boolean btn13 = hardware.gamePad1.getRawButtonPressed(13);
+		boolean btn14 = hardware.gamePad1.getRawButtonPressed(14);
+		boolean btn15 = hardware.gamePad1.getRawButtonPressed(15);
+		boolean btn16 = hardware.gamePad1.getRawButtonPressed(16);
 		
+		if(btn1 || btn2 || btn3 || btn4 || btn5 || btn6 || btn7 || btn8 || btn9 || btn10 || btn11 || btn12 || btn13 || btn14 || btn15 || btn16)
+		{
+			System.out.println("Btn 1: " + btn1 + " Btn 2: " + btn2 + " Btn 3: " + btn3 + " Btn 4: " + btn4);
+			System.out.println("Btn 5: " + btn5 + " Btn 6: " + btn6 + " Btn 7: " + btn7 + " Btn 8: " + btn8);
+			System.out.println("Btn 9: " + btn9 + " Btn 10: " + btn10 + " Btn 11: " + btn11 + " Btn 12: " + btn12);
+			System.out.println("Btn 13: " + btn13 + " Btn 14: " + btn14 + " Btn 15: " + btn15 + " Btn 16: " + btn16);
+		}*/
 		
 		// =========================================================
 		// User code goes above here
