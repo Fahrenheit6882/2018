@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.cameraserver.CameraServer;
 
 import org.usfirst.frc.team6882.interfaces.Transmission;
 import org.usfirst.frc.team6882.interfaces.Manipulators;
@@ -130,7 +130,7 @@ public class hardware {
 	// -------------------------------------
 	// Axis/USB Camera class
 	// -------------------------------------
-	public static UsbCamera visionCamera = new UsbCamera("camera", 0);
+	public static UsbCamera pOVCamera = new UsbCamera("camera", 1);
 
 
 	// **********************************************************
@@ -145,7 +145,7 @@ public class hardware {
 	// ------------------------------------
 	// Joystick classes
 	// ------------------------------------
-	public static Joystick leftStick = new Joystick(0);
+	//public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
 	public static Joystick gamePad1 = new Joystick(2);
 	

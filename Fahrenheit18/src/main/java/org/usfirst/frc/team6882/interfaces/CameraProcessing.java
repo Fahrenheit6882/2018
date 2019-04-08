@@ -17,7 +17,7 @@ public class CameraProcessing {
 
     public static void config() {
         // Adds the table
-        NetworkTable newTable;
+        //NetworkTable newTable;
         //MjpegServer mjpegServer1 = new MjpegServer("camera thing", 0);
 
     }
@@ -26,9 +26,9 @@ public class CameraProcessing {
     public static void start() {
 
         // Starts camera feed
-        CameraServer.getInstance().addCamera(hardware.visionCamera);
-        CameraServer.getInstance().startAutomaticCapture(hardware.visionCamera);
-        CvSink cvSink = CameraServer.getInstance().getVideo(hardware.visionCamera);
-        CameraServer.getInstance().putVideo("Blur", 640, 480);
+        //CameraServer.getInstance().addCamera(hardware.visionCamera);
+        //CameraServer.getInstance().startAutomaticCapture(hardware.visionCamera);
+        //CvSink cvSink = CameraServer.getInstance().getVideo(hardware.visionCamera);
+        //CameraServer.getInstance().putVideo("Blur", 640, 480);
     }
 }

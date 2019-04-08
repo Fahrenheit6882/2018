@@ -94,7 +94,7 @@ public class Teleop {
 			hardware.manipulators.climb();
 		}
 		
-		if(hardware.leftStick.getRawButtonPressed(7))
+		if(hardware.rightStick.getRawButtonPressed(7))
 		{
 			System.out.println("disable = "  + hardware.autoSwitch.get());
 //			System.out.println("Left = " + hardware.leftPosition.get());
@@ -152,14 +152,14 @@ public class Teleop {
 		//------------------------------------------------------------------
 		
 		// Joystick speed controls for driving
-		if (Math.abs(hardware.leftStick.getY()) > constants.joystickDeadZone) {
-			speedLeft = hardware.leftStick.getY();
+		if (Math.abs(hardware.rightStick.getRawAxis(1)) > constants.joystickDeadZone) {
+			speedLeft = hardware.rightStick.getRawAxis(1);
 		} else {
 			speedLeft = 0;
 		}
 
-		if (Math.abs(hardware.rightStick.getY()) > constants.joystickDeadZone) {
-			speedRight = hardware.rightStick.getY();
+		if (Math.abs(hardware.rightStick.getRawAxis(5)) > constants.joystickDeadZone) {
+			speedRight = hardware.rightStick.getRawAxis(5);
 		} else {
 			speedRight = 0;
 		}

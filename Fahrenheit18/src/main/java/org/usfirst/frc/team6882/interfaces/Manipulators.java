@@ -156,8 +156,8 @@ public class Manipulators {
 	public void pullUpManipulator(boolean button) {
 		if(button && !pushBtnState)
 		{
-			//flipper1.set(DoubleSolenoid.Value.kForward);
-			//flipper2.set(DoubleSolenoid.Value.kForward);
+			flipper1.set(DoubleSolenoid.Value.kForward);
+			flipper2.set(DoubleSolenoid.Value.kForward);
 		}
 		
 		pushBtnState = button;
@@ -169,8 +169,8 @@ public class Manipulators {
 	public void pushDownManipulator(boolean button) {
 		if(button && !pullBtnState)
 		{
-			//flipper1.set(DoubleSolenoid.Value.kReverse);
-			//flipper2.set(DoubleSolenoid.Value.kReverse);
+			flipper1.set(DoubleSolenoid.Value.kReverse);
+			flipper2.set(DoubleSolenoid.Value.kReverse);
 		}
 		
 		pullBtnState = button;

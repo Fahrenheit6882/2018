@@ -72,6 +72,9 @@ import org.usfirst.frc.team6882.globals.constants;
 import org.usfirst.frc.team6882.globals.hardware;
 import org.usfirst.frc.team6882.interfaces.CameraProcessing;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -95,7 +98,11 @@ public class Robot extends TimedRobot {
 	// -------------------------------------------------------
 
 	//Configures camera
-
+	private static final String kDefaultAuto = "Default";
+	private static final String kCustomAuto = "My Auto";
+	private String m_autoSelected;
+	private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  
 	/**
 	 * Initialization code for autonomous mode should go here. Will be called once
 	 * when the robot enters autonomous mode. *
@@ -153,51 +160,7 @@ public class Robot extends TimedRobot {
 	 * @author Bob Brown
 	 * @written Jan 2, 2011 -------------------------------------------------------
 	 */
-	@Override
-	public void disabledInit() {
-		// ---------------------------------------
-		// start setup - tell the user we are beginning
-		// setup
-		// ---------------------------------------
-		System.out.println("Started DisabledInit().");
-		// =========================================================
-		// User code goes below here
-		// =========================================================
-
-		// =========================================================
-		// User code goes above here
-		// =========================================================
-		// ---------------------------------------
-		// done setup - tell the user we are complete
-		// setup
-		// ---------------------------------------
-		System.out.println("Completed DisabledInit().");
-	} // end disabledInit
-
-	// -------------------------------------------------------
-	/**
-	 * Periodic code for disabled mode should go here. Will be called periodically
-	 * at a regular rate while the robot is in disabled mode. Code that can be
-	 * "triggered" by a joystick button can go here. This can set up configuration
-	 * things at the driver's station for instance before a match.
-	 *
-	 * @author Bob Brown
-	 * @written Jan 2, 2011 -------------------------------------------------------
-	 */
-	@Override
-	public void disabledPeriodic() {
-		// -------------------------------------
-		// Watch dog code used to go here.
-		// -------------------------------------
-		// =========================================================
-		// User code goes below here
-		// =========================================================
-
-		// =========================================================
-		// User code goes above here
-		// =========================================================
-	} // end disabledPeriodic
-		// -------------------------------------------------------
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -234,8 +197,13 @@ public class Robot extends TimedRobot {
 		// done setup - tell the user we are complete
 		// setup
 		// ---------------------------------------
-		CameraProcessing.config();
-		CameraProcessing.start();
+		//CameraProcessing.config();
+		//CameraProcessing.start();
+		m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
+    	m_chooser.addOption("My Auto", kCustomAuto);
+    	SmartDashboard.putData("Auto choices", m_chooser);
+		CameraServer.getInstance().addCamera(hardware.pOVCamera);
+        CameraServer.getInstance().startAutomaticCapture(hardware.pOVCamera);
 		System.out.println("Fahrenheit-18 is started.  All hardware items created.");
 	} // end
 		// robotInit
@@ -344,7 +312,7 @@ public class Robot extends TimedRobot {
 		// =========================================================
 		
 		//Test Switches
-		if(hardware.leftStick.getRawButtonPressed(7))
+		if(hardware.rightStick.getRawButtonPressed(7))
 		{
 			System.out.println("disable = "  + hardware.autoSwitch.get());
 			//System.out.println("Left = " + hardware.leftPosition.get());
@@ -361,7 +329,7 @@ public class Robot extends TimedRobot {
 			hardware.rightDriveEncoder.reset();
 			hardware.driveBase.stop();
 		}*/
-		if(hardware.leftStick.getRawButtonPressed(6))
+		if(hardware.rightStick.getRawButtonPressed(6))
 		{
 			tempLeft = hardware.leftDriveEncoder.get();
 			tempRight = hardware.rightDriveEncoder.get();

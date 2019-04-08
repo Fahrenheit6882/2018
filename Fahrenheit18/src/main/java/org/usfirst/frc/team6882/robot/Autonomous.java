@@ -62,7 +62,7 @@ public class Autonomous {
 			{
 				if(hardware.rightStick.getZ() <= -0.5) //left side!
 				{
-					if(hardware.leftStick.getZ() <= -0.5) //switch!
+					if(hardware.rightStick.getZ() <= -0.5) //switch!
 					{
 						// switch is on left
 						if(hardware.driverStation.getGameSpecificMessage().charAt(0) == 'L' || hardware.driverStation.getGameSpecificMessage().charAt(0) == 'l')
@@ -74,7 +74,7 @@ public class Autonomous {
 							autoMode = 3;
 						}
 					}
-					else if(hardware.leftStick.getZ() >= 0.5) //scale!
+					else if(hardware.rightStick.getZ() >= 0.5) //scale!
 					{
 						// scale is on left
 						if(hardware.driverStation.getGameSpecificMessage().charAt(1) == 'L' || hardware.driverStation.getGameSpecificMessage().charAt(1) == 'l')
@@ -89,7 +89,7 @@ public class Autonomous {
 				}
 				else if(hardware.rightStick.getZ() >= 0.5) // right side
 				{
-					if(hardware.leftStick.getZ() <= -0.5) //switch!
+					if(hardware.rightStick.getZ() <= -0.5) //switch!
 					{
 						// switch is on left
 						if(hardware.driverStation.getGameSpecificMessage().charAt(0) == 'R' || hardware.driverStation.getGameSpecificMessage().charAt(0) == 'r')
@@ -101,7 +101,7 @@ public class Autonomous {
 							autoMode = 7;
 						}
 					}
-					else if(hardware.leftStick.getZ() >= 0.5) //scale!
+					else if(hardware.rightStick.getZ() >= 0.5) //scale!
 					{
 						// scale is on left
 						if(hardware.driverStation.getGameSpecificMessage().charAt(1) == 'R' || hardware.driverStation.getGameSpecificMessage().charAt(1) == 'r')
